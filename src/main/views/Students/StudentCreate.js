@@ -24,7 +24,7 @@ const StudentCreate = () => (
 					]}
 				/>
 				<Card>
-					<Form mutation={createMutation} />
+					<Form mutation={createMutation} create={true} />
 				</Card>
 			</React.Fragment>
 		)}
