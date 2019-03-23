@@ -5,21 +5,25 @@ import Button from "../Button";
 import Input from "../FormElements/Input";
 
 const Form = props => {
-	const {
-		data = {
-			name: "",
-			lastName: "",
-			address: "",
-			phone: "",
-			email: ""
-		},
-		mutation
-	} = props;
+	const initialValues = {
+		name: "",
+		lastName: "",
+		address: "",
+		phone: "",
+		email: ""
+	};
+
+	const { data = initialValues, mutation, create } = props;
 
 	return (
 		<Formik
-			onSubmit={values => {
-				mutation({ variables: values });
+			onSubmit={(values, { resetForm }) => {
+				const result = mutation({ variables: values });
+				result.then(res => {
+					if (res.data && create) {
+						resetForm();
+					}
+				});
 			}}
 			initialValues={data}
 			//validationSchema={validationSchema()}
