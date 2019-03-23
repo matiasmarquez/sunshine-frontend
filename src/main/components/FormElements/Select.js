@@ -15,12 +15,8 @@ const Select = props => {
 		label
 	} = props;
 
-	let { value } = props.field;
+	const value = props.field.value;
 	const error = errors && errors[name];
-
-	if (value === null) {
-		value = "";
-	}
 
 	return (
 		<div>
@@ -34,8 +30,11 @@ const Select = props => {
 				getOptionLabel={option => option[optionLabel]}
 				getOptionValue={option => option[optionValue]}
 				value={
-					options
-						? options.find(option => option[optionValue] === value)
+					options && value
+						? options.find(
+								option =>
+									option[optionValue] === value[optionValue]
+						  )
 						: ""
 				}
 				onChange={option => {
@@ -43,7 +42,7 @@ const Select = props => {
 						setFieldValue(name, null);
 						return;
 					}
-					setFieldValue(name, option[optionValue]);
+					setFieldValue(name, option);
 				}}
 			/>
 			<Error>{error && error}</Error>
