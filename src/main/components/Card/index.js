@@ -5,7 +5,7 @@ const Card = props => {
 	const { children, ...rest } = props;
 
 	return (
-		<CardStyled {...rest}>
+		<CardStyled {...rest} className="animated zoomIn">
 			<CardBody {...rest}>{children}</CardBody>
 		</CardStyled>
 	);
@@ -30,7 +30,7 @@ const CardStyled = styled.div`
 	background: #fff;
 	border-radius: 0.5rem;
 	box-shadow: 0 4px 25px 0 rgba(0, 0, 0, 0.1);
-	transition: all 0.3s ease-in-out;
+	transition: transform 0.35s, opacity 0.28s ease-in-out;
 	${props => {
 		if (props.mb) {
 			return `
