@@ -8,8 +8,9 @@ import StudentCreate from "./views/Students/StudentCreate";
 import StudentEdit from "./views/Students/StudentEdit";
 import StudentList from "./views/Students/StudentList";
 
-import CourseList from "./views/Courses/CourseList";
+import CourseCreate from "./views/Courses/CourseCreate";
 import CourseEdit from "./views/Courses/CourseEdit";
+import CourseList from "./views/Courses/CourseList";
 
 const AppRoute = ({ component: Component, layout: Layout, ...rest }) => (
 	<Route
@@ -51,6 +52,12 @@ const App = props => {
 					path="/cursos/listar"
 					layout={Layout}
 					component={CourseList}
+				/>
+				<AppRoute
+					exact
+					path="/cursos/alta"
+					layout={Layout}
+					component={CourseCreate}
 				/>
 				<AppRoute
 					exact
