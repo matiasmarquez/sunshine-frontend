@@ -44,6 +44,38 @@ const GlobalStyle = createGlobalStyle`
     padding-right: 15px;
     margin-bottom: 10px;
   }
+
+  @keyframes zoomIn {
+    from {
+      opacity: 0;
+      transform: scale3d(0.95, 0.95, 0.95);
+    }
+    20%{
+      opacity: .2
+    }
+    40% {
+      opacity: .4;
+    }
+    60% {
+      opacity: .6;
+    }
+    80% {
+      opacity: .8;
+    }
+    100% {
+      opacity: 1;
+    }
+  }
+
+  .zoomIn {
+    animation-name: zoomIn;
+  }
+
+  .animated {
+    animation-duration: .4s;
+    animation-fill-mode: both;
+  }
+
 `;
 
 export default GlobalStyle;
