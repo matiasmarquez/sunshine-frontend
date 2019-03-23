@@ -1,7 +1,7 @@
 import gql from "graphql-tag";
 
 export default gql`
-	query course($id: String!) {
+	query course($id: ID!) {
 		course(id: $id) {
 			id
 			category {

@@ -5,7 +5,7 @@ export default gql`
 		$id: ID!
 		$name: String
 		$categoryId: String
-		$installments: [InstallmentInput]
+		$installments: [CourseInstallmentCreateInput]
 		$briefDescription: String
 		$description: String
 		$duration: String
@@ -22,7 +22,7 @@ export default gql`
 				description: $description
 				duration: $duration
 				schedule: $schedule
-				price: $schedule
+				price: $price
 			}
 		) {
 			id
