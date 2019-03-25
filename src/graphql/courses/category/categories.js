@@ -5,6 +5,7 @@ export default gql`
 		courseCategories {
 			id
 			name
+			description
 			color
 		}
 	}
