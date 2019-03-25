@@ -66,6 +66,23 @@ const navigation = [
 				text: "Alta"
 			}
 		]
+	},
+	{
+		url: "#2",
+		icon: "grid",
+		text: "Categorías cursos",
+		childrens: [
+			{
+				url: "/cursos-categorias/listar",
+				icon: "circle",
+				text: "Listar"
+			},
+			{
+				url: "/cursos-categorias/alta",
+				icon: "circle",
+				text: "Alta"
+			}
+		]
 	}
 ];
 
