@@ -1,16 +1,11 @@
 import React from "react";
 import { BrowserRouter, Switch, Route } from "react-router-dom";
 
+import { routes, paths } from "../config/routes";
+
 import Layout from "./layouts/private";
-import Home from "./views/Home";
-
-import StudentCreate from "./views/Students/StudentCreate";
-import StudentEdit from "./views/Students/StudentEdit";
-import StudentList from "./views/Students/StudentList";
-
-import CourseCreate from "./views/Courses/CourseCreate";
-import CourseEdit from "./views/Courses/CourseEdit";
-import CourseList from "./views/Courses/CourseList";
+import StudentList from "./views/students/StudentList";
+import StudentCreate from "./views/students/StudentCreate";
 
 const AppRoute = ({ component: Component, layout: Layout, ...rest }) => (
 	<Route
@@ -24,48 +19,20 @@ const AppRoute = ({ component: Component, layout: Layout, ...rest }) => (
 );
 
 const App = props => {
+	const routesComponents = routes.private.map(
+		({ path, component: Component }) => (
+			<AppRoute
+				exact
+				path={path}
+				layout={Layout}
+				component={Component}
+				key="route"
+			/>
+		)
+	);
 	return (
 		<BrowserRouter>
-			<Switch>
-				<AppRoute exact path="/" layout={Layout} component={Home} />
-				<AppRoute
-					exact
-					path="/alumnos/listar"
-					layout={Layout}
-					component={StudentList}
-				/>
-				<AppRoute
-					exact
-					path="/alumnos/alta"
-					layout={Layout}
-					component={StudentCreate}
-				/>
-				<AppRoute
-					exact
-					path="/alumnos/editar/:id"
-					layout={Layout}
-					component={StudentEdit}
-				/>
-
-				<AppRoute
-					exact
-					path="/cursos/listar"
-					layout={Layout}
-					component={CourseList}
-				/>
-				<AppRoute
-					exact
-					path="/cursos/alta"
-					layout={Layout}
-					component={CourseCreate}
-				/>
-				<AppRoute
-					exact
-					path="/cursos/editar/:id"
-					layout={Layout}
-					component={CourseEdit}
-				/>
-			</Switch>
+			<Switch>{routesComponents}</Switch>
 		</BrowserRouter>
 	);
 };
