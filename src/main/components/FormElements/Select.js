@@ -11,12 +11,32 @@ const Select = props => {
 		options,
 		optionValue,
 		optionLabel,
+		isMulti = false,
+		noOptionsMessage = "No hay opciones disponibles",
 		placeholder,
 		label
 	} = props;
 
 	const value = props.field.value;
 	const error = errors && errors[name];
+
+	const setValue = () => {
+		if (options && value) {
+			let output;
+			if (!isMulti) {
+				output = options.find(
+					option => option[optionValue] === value[optionValue]
+				);
+			}
+			if (isMulti) {
+				output = options.filter(option =>
+					value.some(val => option[optionValue] === val[optionValue])
+				);
+			}
+			return output;
+		}
+		return "";
+	};
 
 	return (
 		<div>
@@ -27,16 +47,14 @@ const Select = props => {
 				isClearable={true}
 				placeholder={placeholder}
 				options={options}
+				noOptionsMessage={() => {
+					return noOptionsMessage;
+				}}
 				getOptionLabel={option => option[optionLabel]}
 				getOptionValue={option => option[optionValue]}
-				value={
-					options && value
-						? options.find(
-								option =>
-									option[optionValue] === value[optionValue]
-						  )
-						: ""
-				}
+				isMulti={isMulti}
+				closeMenuOnSelect={!isMulti}
+				value={setValue()}
 				onChange={option => {
 					if (!option) {
 						setFieldValue(name, null);
@@ -79,6 +97,29 @@ const ReactSelectStyled = styled(ReactSelect)`
 		}
 		&:hover {
 			background: #f9f9f9;
+		}
+	}
+	& .Select__multi-value {
+		background: ${props => `rgba(${props.theme.primary}, 0.1)`};
+		border-radius: 2px;
+		margin: 2px;
+		&__label {
+			color: ${props => `rgb(${props.theme.primary})`};
+			font-weight: 600;
+			font-size: 90%;
+			text-overflow: ellipsis;
+			white-space: nowrap;
+			box-sizing: border-box;
+			border-radius: 2px;
+			overflow: hidden;
+			padding: 3px 3px 3px 6px;
+		}
+		&__remove {
+			color: ${props => `rgb(${props.theme.primary})`};
+			&:hover {
+				background: ${props => `rgb(${props.theme.primary})`};
+				color: #fff;
+			}
 		}
 	}
 `;
