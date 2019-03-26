@@ -1,6 +1,8 @@
 import React, { Component } from "react";
 import styled from "styled-components";
 
+import { paths } from "../../../../config/routes";
+
 import SidebarOption from "./SidebarOption";
 import logo from "../../../../assets/logo1.png";
 
@@ -29,7 +31,7 @@ export default Sidebar;
 
 const navigation = [
 	{
-		url: "/",
+		url: paths.home,
 		icon: "home",
 		text: "Inicio"
 	},
@@ -39,12 +41,12 @@ const navigation = [
 		text: "Alumnos",
 		childrens: [
 			{
-				url: "/alumnos/listar",
+				url: paths.studentList,
 				icon: "circle",
 				text: "Listar"
 			},
 			{
-				url: "/alumnos/alta",
+				url: paths.studentCreate,
 				icon: "circle",
 				text: "Alta"
 			}
@@ -56,12 +58,12 @@ const navigation = [
 		text: "Cursos",
 		childrens: [
 			{
-				url: "/cursos/listar",
+				url: paths.courseList,
 				icon: "circle",
 				text: "Listar"
 			},
 			{
-				url: "/cursos/alta",
+				url: paths.courseCreate,
 				icon: "circle",
 				text: "Alta"
 			}
@@ -69,16 +71,33 @@ const navigation = [
 	},
 	{
 		url: "#2",
-		icon: "grid",
-		text: "Categorías cursos",
+		icon: "star",
+		text: "Staff",
 		childrens: [
 			{
-				url: "/cursos-categorias/listar",
+				url: paths.staffList,
 				icon: "circle",
 				text: "Listar"
 			},
 			{
-				url: "/cursos-categorias/alta",
+				url: paths.staffCreate,
+				icon: "circle",
+				text: "Alta"
+			}
+		]
+	},
+	{
+		url: "#3",
+		icon: "grid",
+		text: "Categorías cursos",
+		childrens: [
+			{
+				url: paths.courseCategoryList,
+				icon: "circle",
+				text: "Listar"
+			},
+			{
+				url: paths.courseCategoryCreate,
 				icon: "circle",
 				text: "Alta"
 			}
