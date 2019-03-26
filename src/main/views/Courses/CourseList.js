@@ -83,9 +83,7 @@ const CourseList = props => (
 												onClick={() => {
 													showAlertDelete({
 														id: row.value.id,
-														name: row.value.name,
-														lastName:
-															row.value.lastName
+														name: row.value.name
 													});
 												}}
 												icon="trash-2"
