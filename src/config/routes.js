@@ -12,6 +12,10 @@ import CourseCategoryCreate from "../main/views/courses/category/CategoryCreate"
 import CourseCategoryEdit from "../main/views/courses/category/CategoryEdit";
 import CourseCategoryList from "../main/views/courses/category/CategoryList";
 
+import StaffCreate from "../main/views/staff/StaffCreate";
+import StaffEdit from "../main/views/staff/StaffEdit";
+import StaffList from "../main/views/staff/StaffList";
+
 export const paths = {
 	home: "/",
 	studentList: "/alumnos/listar",
@@ -22,7 +26,10 @@ export const paths = {
 	courseEdit: "/cursos/editar/:id",
 	courseCategoryList: "/cursos-categorias/listar",
 	courseCategoryCreate: "/cursos-categorias/alta",
-	courseCategoryEdit: "/cursos-categorias/editar/:id"
+	courseCategoryEdit: "/cursos-categorias/editar/:id",
+	staffList: "/staff/listar",
+	staffCreate: "/staff/alta",
+	staffEdit: "/staff/editar/:id"
 };
 
 export const routes = {
@@ -66,6 +73,18 @@ export const routes = {
 		{
 			path: paths.courseCategoryEdit,
 			component: CourseCategoryEdit
+		},
+		{
+			path: paths.staffList,
+			component: StaffList
+		},
+		{
+			path: paths.staffCreate,
+			component: StaffCreate
+		},
+		{
+			path: paths.staffEdit,
+			component: StaffEdit
 		}
 	]
 };
