@@ -20,6 +20,14 @@ const CourseList = props => (
 							active: true
 						}
 					]}
+					actions={[
+						{
+							success: true,
+							text: "Nueva persona",
+							path: paths.staffCreate,
+							...props
+						}
+					]}
 				/>
 				<Card p0>
 					<DataTable
