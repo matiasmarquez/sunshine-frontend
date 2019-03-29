@@ -65,7 +65,7 @@ const CourseCategoryController = ({ match, history, action, children }) => {
 			} catch (err) {}
 
 			Notification({
-				text: "Curso creado correctamente",
+				text: "Categoría creada correctamente",
 				type: "success"
 			});
 		}
