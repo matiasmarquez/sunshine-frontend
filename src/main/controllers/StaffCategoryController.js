@@ -4,10 +4,10 @@ import { useQuery, useMutation } from "react-apollo-hooks";
 import { paths } from "../../config/routes";
 
 import staffCategoriesQuery from "../../graphql/staff/category/categories";
-import courseCategoryQuery from "../../graphql/courses/category/category";
-import createCourseCategory from "../../graphql/courses/category/createCategory";
-import updateCourseCategory from "../../graphql/courses/category/updateCategory";
-import deleteCourseCategory from "../../graphql/courses/category/deleteCategory";
+import staffCategoryQuery from "../../graphql/staff/category/category";
+import createStaffCategory from "../../graphql/staff/category/createCategory";
+import updateStaffCategory from "../../graphql/staff/category/updateCategory";
+import deleteStaffCategory from "../../graphql/staff/category/deleteCategory";
 
 import Notification from "../components/Notification";
 import SweetAlert from "../components/SweetAlert";
@@ -31,7 +31,7 @@ const StaffCategoryController = ({ match, history, action, children }) => {
 		data: dataCategory,
 		error: errorCategory,
 		loading: loadingCategory
-	} = useQuery(courseCategoryQuery, {
+	} = useQuery(staffCategoryQuery, {
 		skip: action !== "edit",
 		variables: { id: idCategory }
 	});
@@ -48,49 +48,49 @@ const StaffCategoryController = ({ match, history, action, children }) => {
 		loading = loadingCategory;
 	}
 
-	const createMutation = useMutation(createCourseCategory, {
-		update: (cache, { data: { createCourseCategory } }) => {
+	const createMutation = useMutation(createStaffCategory, {
+		update: (cache, { data: { createStaffCategory } }) => {
 			try {
-				const { courseCategories } = cache.readQuery({
+				const { staffCategories } = cache.readQuery({
 					query: staffCategoriesQuery
 				});
 				cache.writeQuery({
 					query: staffCategoriesQuery,
 					data: {
-						courseCategories: courseCategories.concat([
-							createCourseCategory
+						staffCategories: staffCategories.concat([
+							createStaffCategory
 						])
 					}
 				});
 			} catch (err) {}
 
 			Notification({
-				text: "Curso creado correctamente",
+				text: "Categoría creada correctamente",
 				type: "success"
 			});
 		}
 	});
 
-	const updateMutation = useMutation(updateCourseCategory, {
+	const updateMutation = useMutation(updateStaffCategory, {
 		update: () => {
 			Notification({
 				text: "Categoría editada correctamente",
 				type: "success"
 			});
-			history.push(paths.courseCategoryList);
+			history.push(paths.staffCategoryList);
 		}
 	});
 
-	const deleteMutation = useMutation(deleteCourseCategory, {
-		update: (cache, { data: { deleteCourseCategory } }) => {
-			const { courseCategories } = cache.readQuery({
+	const deleteMutation = useMutation(deleteStaffCategory, {
+		update: (cache, { data: { deleteStaffCategory } }) => {
+			const { staffCategories } = cache.readQuery({
 				query: staffCategoriesQuery
 			});
 			cache.writeQuery({
 				query: staffCategoriesQuery,
 				data: {
-					courseCategories: _.remove(courseCategories, category => {
-						return category.id !== deleteCourseCategory.id;
+					staffCategories: _.remove(staffCategories, category => {
+						return category.id !== deleteStaffCategory.id;
 					})
 				}
 			});
