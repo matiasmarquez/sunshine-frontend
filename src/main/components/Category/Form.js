@@ -13,7 +13,7 @@ const Form = props => {
 		color: ""
 	};
 
-	const { data = initialValues, mutation, create } = props;
+	const { data = initialValues, mutation, color = true, create } = props;
 
 	return (
 		<Formik
@@ -36,12 +36,14 @@ const Form = props => {
 							type="text"
 							component={Input}
 						/>
-						<Field
-							name="color"
-							label="Color"
-							type="color"
-							component={Colorpicker}
-						/>
+						{color && (
+							<Field
+								name="color"
+								label="Color"
+								type="color"
+								component={Colorpicker}
+							/>
+						)}
 						<Field
 							name="description"
 							label="Descripción"
