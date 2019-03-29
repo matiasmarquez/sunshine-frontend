@@ -8,7 +8,7 @@ import ContentHeader from "../../../layouts/private/components/ContentHeader";
 import Form from "../../../components/Category/Form";
 import Card from "../../../components/Card";
 
-const CourseCreate = () => (
+const CategoryCreate = () => (
 	<CourseCategoryController action="list">
 		{({ createMutation }) => (
 			<React.Fragment>
@@ -33,4 +33,4 @@ const CourseCreate = () => (
 	</CourseCategoryController>
 );
 
-export default CourseCreate;
+export default CategoryCreate;
