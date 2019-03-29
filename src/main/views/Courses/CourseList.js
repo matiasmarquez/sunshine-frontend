@@ -1,6 +1,7 @@
 import React from "react";
 
 import CourseController from "../../controllers/CourseController";
+import { paths } from "../../../config/routes";
 
 import ContentHeader from "../../layouts/private/components/ContentHeader";
 import CategoryIndicator from "../../components/Course/CategoryIndicator";
@@ -18,6 +19,14 @@ const CourseList = props => (
 						{
 							text: "Cursos",
 							active: true
+						}
+					]}
+					actions={[
+						{
+							success: true,
+							text: "Nuevo curso",
+							path: paths.courseCreate,
+							...props
 						}
 					]}
 				/>
@@ -69,9 +78,10 @@ const CourseList = props => (
 												xs
 												typeicon
 												icon="edit-2"
-												path={`/cursos/editar/${
+												path={paths.courseEdit.replace(
+													":id",
 													row.value.id
-												}`}
+												)}
 												mr={5}
 												{...props}
 											/>
