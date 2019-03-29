@@ -1,12 +1,13 @@
 import React from "react";
 
-import StudentController from "../../controllers/StudentController";
+import { paths } from "config/routes";
+import StudentController from "main/controllers/StudentController";
 
-import ContentHeader from "../../layouts/private/components/ContentHeader";
-import Card from "../../components/Card";
-import DataTable from "../../components/DataTable";
-import Avatar from "../../components/Avatar";
-import Button from "../../components/Button";
+import ContentHeader from "main/layouts/private/components/ContentHeader";
+import Card from "main/components/Card";
+import DataTable from "main/components/DataTable";
+import Avatar from "main/components/Avatar";
+import Button from "main/components/Button";
 
 const StudentList = props => (
 	<StudentController action="list">
@@ -18,6 +19,14 @@ const StudentList = props => (
 						{
 							text: "Alumnos",
 							active: true
+						}
+					]}
+					actions={[
+						{
+							success: true,
+							text: "Nuevo alumno",
+							path: paths.studentCreate,
+							...props
 						}
 					]}
 				/>
@@ -76,9 +85,10 @@ const StudentList = props => (
 												xs
 												typeicon
 												icon="edit-2"
-												path={`/alumnos/editar/${
+												path={paths.studentEdit.replace(
+													":id",
 													value.id
-												}`}
+												)}
 												mr={5}
 												{...props}
 											/>
