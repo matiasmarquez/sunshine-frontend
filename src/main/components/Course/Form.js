@@ -6,13 +6,14 @@ import Button from "../Button";
 import Input from "../FormElements/Input";
 import Textarea from "../FormElements/Textarea";
 import Select from "../FormElements/Select";
+import SubmitContainer from "../FormElements/SubmitContainer";
+import Multiple from "../FormElements/Multiple";
 
 const Form = props => {
 	const initialValues = {
 		name: "",
 		installments: [],
 		category: null,
-		briefDescription: "",
 		description: "",
 		duration: "",
 		schedule: "",
@@ -62,6 +63,23 @@ const Form = props => {
 							component={Select}
 						/>
 						<Field
+							name="installments"
+							label="Cuotas"
+							fields={[
+								{
+									label: "Número de cuota",
+									name: "number",
+									type: "number"
+								},
+								{
+									label: "Precio",
+									name: "price",
+									type: "number"
+								}
+							]}
+							component={Multiple}
+						/>
+						<Field
 							name="duration"
 							label="Duración"
 							type="text"
@@ -74,18 +92,19 @@ const Form = props => {
 							component={Input}
 						/>
 						<Field
-							name="briefDescription"
-							label="Descripción breve"
-							type="text"
-							component={Textarea}
-						/>
-						<Field
 							name="description"
 							label="Descripción"
 							type="text"
 							component={Textarea}
 						/>
-						<Button success filled text="Guardar" type="submit" />
+						<SubmitContainer>
+							<Button
+								success
+								filled
+								text="Guardar"
+								type="submit"
+							/>
+						</SubmitContainer>
 					</FormFormik>
 				);
 			}}
