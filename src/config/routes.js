@@ -16,20 +16,32 @@ import StaffCreate from "../main/views/staff/StaffCreate";
 import StaffEdit from "../main/views/staff/StaffEdit";
 import StaffList from "../main/views/staff/StaffList";
 
+import StaffCategoryCreate from "../main/views/staff/category/CategoryCreate";
+import StaffCategoryList from "../main/views/staff/category/CategoryList";
+import StaffCategoryEdit from "../main/views/staff/category/CategoryEdit";
+
 export const paths = {
 	home: "/",
+
 	studentList: "/alumnos/listar",
 	studentCreate: "/alumnos/alta",
 	studentEdit: "/alumnos/editar/:id",
+
 	courseList: "/cursos/listar",
 	courseCreate: "/cursos/alta",
 	courseEdit: "/cursos/editar/:id",
+
 	courseCategoryList: "/cursos-categorias/listar",
 	courseCategoryCreate: "/cursos-categorias/alta",
 	courseCategoryEdit: "/cursos-categorias/editar/:id",
+
 	staffList: "/staff/listar",
 	staffCreate: "/staff/alta",
-	staffEdit: "/staff/editar/:id"
+	staffEdit: "/staff/editar/:id",
+
+	staffCategoryList: "/staff-categorias/listar",
+	staffCategoryCreate: "/staff-categorias/alta",
+	staffCategoryEdit: "/staff-categorias/editar/:id"
 };
 
 export const routes = {
@@ -85,6 +97,18 @@ export const routes = {
 		{
 			path: paths.staffEdit,
 			component: StaffEdit
+		},
+		{
+			path: paths.staffCategoryList,
+			component: StaffCategoryList
+		},
+		{
+			path: paths.staffCategoryCreate,
+			component: StaffCategoryCreate
+		},
+		{
+			path: paths.staffCategoryEdit,
+			component: StaffCategoryEdit
 		}
 	]
 };
