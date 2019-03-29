@@ -29,6 +29,7 @@ Button.propTypes = {
 
 	// Types
 	block: PropTypes.bool,
+	typeicon: PropTypes.bool,
 
 	// Margin
 	mr: PropTypes.number,
@@ -46,6 +47,7 @@ const ButtonStyled = styled.button`
 	font-family: inherit;
 	cursor: pointer;
 	transition: all 0.2s ease;
+	font-weight: ${props => (props.bold ? `500` : `400`)};
 	${props => {
 		if (props.block) {
 			return `
@@ -53,7 +55,7 @@ const ButtonStyled = styled.button`
 				width: 100%;
 			`;
 		}
-	}}
+	}};
 	${props => {
 		if (props.xs) {
 			return `	
@@ -66,7 +68,7 @@ const ButtonStyled = styled.button`
 					font-size: 14px;
 				`;
 		}
-	}}
+	}};
 	${props => {
 		if (props.typeicon) {
 			return `
@@ -76,7 +78,7 @@ const ButtonStyled = styled.button`
 				border-radius: 50px;
 			`;
 		}
-	}}
+	}};
 	color: ${props => {
 		if (props.flat || props.border) {
 			if (props.success) {
