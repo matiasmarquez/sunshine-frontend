@@ -1,6 +1,7 @@
 import React from "react";
 
 import CourseCategoryController from "../../../controllers/CourseCategoryController";
+import { paths } from "../../../../config/routes";
 
 import ContentHeader from "../../../layouts/private/components/ContentHeader";
 import CategoryIndicator from "../../../components/Course/CategoryIndicator";
@@ -18,6 +19,14 @@ const CategoryList = props => (
 						{
 							text: "Categorías de cursos",
 							active: true
+						}
+					]}
+					actions={[
+						{
+							success: true,
+							text: "Nueva categoría",
+							path: paths.courseCategoryCreate,
+							...props
 						}
 					]}
 				/>
@@ -57,9 +66,10 @@ const CategoryList = props => (
 												xs
 												typeicon
 												icon="edit-2"
-												path={`/cursos-categorias/editar/${
+												path={paths.courseCategoryEdit.replace(
+													":id",
 													row.value.id
-												}`}
+												)}
 												mr={5}
 												{...props}
 											/>
