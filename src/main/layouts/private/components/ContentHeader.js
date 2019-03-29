@@ -1,16 +1,25 @@
 import React from "react";
 import styled from "styled-components";
 import Breadcrumb from "../../../components/Breadcrumb";
+import Button from "../../../components/Button";
 
 const ContentHeader = props => {
-	const { title, breadcrumb } = props;
+	const { title, breadcrumb, actions } = props;
 
 	return (
 		<Header>
-			<TitleContainer>
-				<Title>{title}</Title>
-			</TitleContainer>
-			<Breadcrumb routes={breadcrumb} />
+			<HeaderLeft>
+				<TitleContainer>
+					<Title>{title}</Title>
+				</TitleContainer>
+				<Breadcrumb routes={breadcrumb} />
+			</HeaderLeft>
+			<HeaderRight>
+				{actions &&
+					actions.map((props, key) => (
+						<Button {...props} filled bold key={key} />
+					))}
+			</HeaderRight>
 		</Header>
 	);
 };
@@ -34,5 +43,12 @@ const Title = styled.h1`
 	margin-bottom: 3px;
 	color: #636363;
 `;
+
+const HeaderLeft = styled.div`
+	display: flex;
+	align-items: center;
+	flex: 2;
+`;
+const HeaderRight = styled.div``;
 
 export default ContentHeader;
