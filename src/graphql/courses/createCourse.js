@@ -5,7 +5,6 @@ export default gql`
 		$name: String!
 		$categoryId: String!
 		$installments: [CourseInstallmentCreateInput]
-		$briefDescription: String
 		$description: String
 		$duration: String!
 		$schedule: String!
@@ -16,7 +15,6 @@ export default gql`
 				name: $name
 				categoryId: $categoryId
 				installments: $installments
-				briefDescription: $briefDescription
 				description: $description
 				duration: $duration
 				schedule: $schedule
@@ -29,8 +27,12 @@ export default gql`
 				name
 				color
 			}
+			installments {
+				id
+				number
+				price
+			}
 			name
-			briefDescription
 			description
 			duration
 			schedule

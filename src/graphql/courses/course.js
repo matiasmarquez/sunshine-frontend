@@ -15,7 +15,6 @@ export default gql`
 				price
 			}
 			name
-			briefDescription
 			description
 			duration
 			schedule

@@ -9,8 +9,12 @@ export default gql`
 				name
 				color
 			}
+			installments {
+				id
+				number
+				price
+			}
 			name
-			briefDescription
 			description
 			duration
 			schedule
