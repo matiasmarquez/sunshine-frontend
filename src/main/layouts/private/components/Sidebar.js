@@ -87,19 +87,19 @@ const navigation = [
 		]
 	},
 	{
-		url: "#3",
-		icon: "grid",
-		text: "Categorías cursos",
+		url: "#4",
+		icon: "settings",
+		text: "Configuración",
 		childrens: [
 			{
 				url: paths.courseCategoryList,
 				icon: "circle",
-				text: "Listar"
+				text: "Categorías cursos"
 			},
 			{
-				url: paths.courseCategoryCreate,
+				url: paths.staffCategoryList,
 				icon: "circle",
-				text: "Alta"
+				text: "Categorías staff"
 			}
 		]
 	}
