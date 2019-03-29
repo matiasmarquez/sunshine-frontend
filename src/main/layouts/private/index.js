@@ -10,6 +10,7 @@ const Layout = props => {
 	return (
 		<Wrapper>
 			<Sidebar />
+			<Topbar />
 			<Content>{children}</Content>
 		</Wrapper>
 	);
