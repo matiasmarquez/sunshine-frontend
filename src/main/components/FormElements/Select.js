@@ -24,9 +24,12 @@ const Select = props => {
 		if (options && value) {
 			let output;
 			if (!isMulti) {
-				output = options.find(
-					option => option[optionValue] === value[optionValue]
-				);
+				output = options.find(option => {
+					if (typeof value !== "object") {
+						return option[optionValue] === value;
+					}
+					return option[optionValue] === value[optionValue];
+				});
 			}
 			if (isMulti) {
 				output = options.filter(option =>
@@ -121,5 +124,9 @@ const ReactSelectStyled = styled(ReactSelect)`
 				color: #fff;
 			}
 		}
+	}
+	& .Select__menu {
+		background: #fff;
+		z-index: 999;
 	}
 `;
