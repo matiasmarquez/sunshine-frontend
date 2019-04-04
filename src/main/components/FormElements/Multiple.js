@@ -7,10 +7,15 @@ import { Row, Col } from "react-flexbox-grid";
 
 import Input from "./Input";
 import Button from "../Button";
+import Select from "main/components/FormElements/Select";
+import Textarea from "main/components/FormElements/Textarea";
 
 const Multiple = ({
-	field: { name, value },
+	field: { name, value = [] },
 	form: { errors = null, setFieldValue },
+	withCols,
+	colxsrow,
+	rowAsCard,
 	fields,
 	label
 }) => {
@@ -56,28 +61,64 @@ const Multiple = ({
 					/>
 				</Actions>
 			</Header>
-			<Body>
-				{value.map((val, key) => (
-					<Row key={key} className="animated zoomIn">
-						{fields.map(
-							(
-								{ type, name: nameProperty, label },
-								keyProperty
-							) => {
-								return (
-									<Col xs key={keyProperty}>
-										<Field
-											name={`${name}[${key}][${nameProperty}]`}
-											label={label}
-											type={type}
-											component={Input}
-										/>
-									</Col>
-								);
-							}
-						)}
-					</Row>
-				))}
+			<Body rowAsCard={rowAsCard}>
+				{value.length > 0 &&
+					value.map((val, key) => (
+						<Row key={key} className="animated zoomIn">
+							{fields.map(
+								(
+									{
+										type,
+										name: nameProperty,
+										label,
+										options,
+										optionValue,
+										optionLabel,
+										placeholder,
+										colxs,
+										colmd
+									},
+									keyProperty
+								) => {
+									return (
+										<Col
+											xs={colxs}
+											md={colmd}
+											key={keyProperty}
+										>
+											{type !== "select" &&
+												type !== "textarea" && (
+													<Field
+														name={`${name}[${key}][${nameProperty}]`}
+														label={label}
+														type={type}
+														component={Input}
+													/>
+												)}
+											{type === "select" && (
+												<Field
+													name={`${name}[${key}][${nameProperty}]`}
+													label={label}
+													options={options}
+													optionValue={optionValue}
+													optionLabel={optionLabel}
+													placeholder={placeholder}
+													component={Select}
+												/>
+											)}
+											{type === "textarea" && (
+												<Field
+													name={`${name}[${key}][${nameProperty}`}
+													label={label}
+													component={Textarea}
+												/>
+											)}
+										</Col>
+									);
+								}
+							)}
+						</Row>
+					))}
 			</Body>
 		</React.Fragment>
 	);
@@ -90,6 +131,18 @@ const Body = styled.div`
 	border: 2px solid #f8f8f8;
 	border-top: 0;
 	margin-bottom: 15px;
+	${props => {
+		if (props.rowAsCard) {
+			return `
+				& .row{
+					border-radius: 0.5rem;
+					box-shadow: 0 4px 25px 0 rgba(0,0,0,0.1);
+					padding: 20px 15px;
+					margin-bottom: 20px;
+				}
+			`;
+		}
+	}}
 `;
 
 const Actions = styled.div`
