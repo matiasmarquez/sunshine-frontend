@@ -1,8 +1,14 @@
 import React from "react";
 import { Formik, Form as FormFormik, Field } from "formik";
 
+import _ from "lodash";
+
 import Button from "../Button";
 import Input from "../FormElements/Input";
+import Multiple from "main/components/FormElements/Multiple";
+import Card from "main/components/Card";
+import { Row, Col } from "react-flexbox-grid";
+import SubmitContainer from "main/components/FormElements/SubmitContainer";
 
 const Form = props => {
 	const initialValues = {
@@ -13,12 +19,24 @@ const Form = props => {
 		email: ""
 	};
 
-	const { data = initialValues, mutation, create } = props;
+	const { data = initialValues, mutation, parentTypes, create } = props;
 
 	return (
 		<Formik
-			onSubmit={(values, { resetForm }) => {
-				const result = mutation({ variables: values });
+			onSubmit={({ parents, ...rest }, { resetForm }) => {
+				const filtered = [];
+				_.forEach(parents, parent => {
+					if (typeof parent.type === "object") {
+						parent.type = parent.type.id;
+					}
+					filtered.push(_.omit(parent, ["__typename"]));
+				});
+				const result = mutation({
+					variables: {
+						...rest,
+						parents: filtered
+					}
+				});
 				result.then(res => {
 					if (res.data && create) {
 						resetForm();
@@ -30,37 +48,102 @@ const Form = props => {
 			render={({ values, errors }) => {
 				return (
 					<FormFormik>
-						<Field
-							name="name"
-							label="Nombre"
-							type="text"
-							component={Input}
-						/>
-						<Field
-							name="lastName"
-							label="Apellido"
-							type="text"
-							component={Input}
-						/>
-						<Field
-							name="address"
-							label="Dirección"
-							type="text"
-							component={Input}
-						/>
-						<Field
-							name="phone"
-							label="Teléfono"
-							type="text"
-							component={Input}
-						/>
-						<Field
-							name="email"
-							label="Correo"
-							type="text"
-							component={Input}
-						/>
-						<Button success filled text="Guardar" type="submit" />
+						<Row>
+							<Col md={6}>
+								<Card title="Datos del alumno" mb={25}>
+									<Field
+										name="name"
+										label="Nombre"
+										type="text"
+										component={Input}
+									/>
+									<Field
+										name="lastName"
+										label="Apellido"
+										type="text"
+										component={Input}
+									/>
+									<Field
+										name="address"
+										label="Dirección"
+										type="text"
+										component={Input}
+									/>
+									<Field
+										name="phone"
+										label="Teléfono"
+										type="text"
+										component={Input}
+									/>
+									<Field
+										name="email"
+										label="Correo"
+										type="text"
+										component={Input}
+									/>
+									<SubmitContainer>
+										<Button
+											success
+											filled
+											text="Guardar"
+											type="submit"
+										/>
+									</SubmitContainer>
+								</Card>
+							</Col>
+							<Col md={6}>
+								<Card title="Datos de los padres">
+									<Field
+										name="parents"
+										label="Gestión"
+										rowAsCard={true}
+										fields={[
+											{
+												label: "Relación",
+												name: "type",
+												options: parentTypes,
+												optionValue: "id",
+												optionLabel: "type",
+												placeholder:
+													"Seleccionar relacion",
+												colxs: 12,
+												colmd: 12,
+												type: "select"
+											},
+											{
+												label: "Nombre",
+												name: "name",
+												colxs: 12,
+												colmd: 4,
+												type: "text"
+											},
+											{
+												label: "Apellido",
+												name: "lastName",
+												colxs: 12,
+												colmd: 4,
+												type: "text"
+											},
+											{
+												label: "Teléfono",
+												name: "phone",
+												colxs: 12,
+												colmd: 4,
+												type: "text"
+											},
+											{
+												label: "Comentarios",
+												name: "comment",
+												colxs: 12,
+												colmd: 12,
+												type: "textarea"
+											}
+										]}
+										component={Multiple}
+									/>
+								</Card>
+							</Col>
+						</Row>
 					</FormFormik>
 				);
 			}}
