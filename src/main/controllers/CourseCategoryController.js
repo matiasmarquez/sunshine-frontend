@@ -1,16 +1,16 @@
 import _ from "lodash";
 import { useQuery, useMutation } from "react-apollo-hooks";
 
-import { paths } from "../../config/routes";
+import { paths } from "config/routes";
 
-import courseCategoriesQuery from "../../graphql/courses/category/categories";
-import courseCategoryQuery from "../../graphql/courses/category/category";
-import createCourseCategory from "../../graphql/courses/category/createCategory";
-import updateCourseCategory from "../../graphql/courses/category/updateCategory";
-import deleteCourseCategory from "../../graphql/courses/category/deleteCategory";
+import courseCategoriesQuery from "graphql/courses/category/categories";
+import courseCategoryQuery from "graphql/courses/category/category";
+import createCourseCategory from "graphql/courses/category/createCategory";
+import updateCourseCategory from "graphql/courses/category/updateCategory";
+import deleteCourseCategory from "graphql/courses/category/deleteCategory";
 
-import Notification from "../components/Notification";
-import SweetAlert from "../components/SweetAlert";
+import Notification from "main/components/Notification";
+import SweetAlert from "main/components/SweetAlert";
 
 const CourseCategoryController = ({ match, history, action, children }) => {
 	const idCategory = match && match.params.id;
