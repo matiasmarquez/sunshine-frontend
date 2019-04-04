@@ -2,8 +2,16 @@ import gql from "graphql-tag";
 
 export default gql`
 	query students {
-		students(where: {}) {
+		students {
 			id
+			parents {
+				id
+				name
+				lastName
+				type
+				phone
+				comment
+			}
 			name
 			lastName
 			address

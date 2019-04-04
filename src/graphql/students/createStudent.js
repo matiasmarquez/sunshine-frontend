@@ -2,6 +2,7 @@ import gql from "graphql-tag";
 
 export default gql`
 	mutation createStudent(
+		$parents: [ParentCreateInput]
 		$name: String!
 		$lastName: String!
 		$address: String!
@@ -10,6 +11,7 @@ export default gql`
 	) {
 		createStudent(
 			data: {
+				parents: $parents
 				name: $name
 				lastName: $lastName
 				address: $address
@@ -18,6 +20,14 @@ export default gql`
 			}
 		) {
 			id
+			parents {
+				id
+				name
+				lastName
+				type
+				phone
+				comment
+			}
 			name
 			lastName
 			address
