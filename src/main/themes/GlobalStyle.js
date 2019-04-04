@@ -39,6 +39,7 @@ const GlobalStyle = createGlobalStyle`
 
   .row .col-xs-3,
   .row .col-md-4,
+  .row .col-md-12,
   .row .col-xs{
     padding-left: 15px;
     padding-right: 15px;
@@ -73,7 +74,6 @@ const GlobalStyle = createGlobalStyle`
 
   .animated {
     animation-duration: .4s;
-    animation-fill-mode: both;
   }
 
 `;
