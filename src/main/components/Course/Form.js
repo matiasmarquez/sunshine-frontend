@@ -2,12 +2,14 @@ import React from "react";
 import { Formik, Form as FormFormik, Field } from "formik";
 import _ from "lodash";
 
-import Button from "../Button";
-import Input from "../FormElements/Input";
-import Textarea from "../FormElements/Textarea";
-import Select from "../FormElements/Select";
-import SubmitContainer from "../FormElements/SubmitContainer";
-import Multiple from "../FormElements/Multiple";
+import Button from "main/components/Button";
+import Input from "main/components/FormElements/Input";
+import Textarea from "main/components/FormElements/Textarea";
+import Select from "main/components/FormElements/Select";
+import Installments from "main/components/FormElements/Installments";
+import SubmitContainer from "main/components/FormElements/SubmitContainer";
+
+import { Tab, Tabs, TabList, TabPanel } from "main/components/Tabs";
 
 const Form = props => {
 	const initialValues = {
@@ -47,56 +49,54 @@ const Form = props => {
 			render={({ values, errors }) => {
 				return (
 					<FormFormik>
-						<Field
-							name="name"
-							label="Nombre"
-							type="text"
-							component={Input}
-						/>
-						<Field
-							name="category"
-							label="Categoría"
-							options={categories}
-							optionValue="id"
-							optionLabel="name"
-							placeholder="Seleccionar categoría"
-							component={Select}
-						/>
-						<Field
-							name="installments"
-							label="Cuotas"
-							fields={[
-								{
-									label: "Número de cuota",
-									name: "number",
-									type: "number"
-								},
-								{
-									label: "Precio",
-									name: "price",
-									type: "number"
-								}
-							]}
-							component={Multiple}
-						/>
-						<Field
-							name="duration"
-							label="Duración"
-							type="text"
-							component={Input}
-						/>
-						<Field
-							name="schedule"
-							label="Horario"
-							type="text"
-							component={Input}
-						/>
-						<Field
-							name="description"
-							label="Descripción"
-							type="text"
-							component={Textarea}
-						/>
+						<Tabs>
+							<TabList>
+								<Tab>Información general</Tab>
+								<Tab>Cuotas</Tab>
+							</TabList>
+							<TabPanel>
+								<Field
+									name="name"
+									label="Nombre"
+									type="text"
+									component={Input}
+								/>
+								<Field
+									name="category"
+									label="Categoría"
+									options={categories}
+									optionValue="id"
+									optionLabel="name"
+									placeholder="Seleccionar categoría"
+									component={Select}
+								/>
+								<Field
+									name="duration"
+									label="Duración"
+									type="text"
+									component={Input}
+								/>
+								<Field
+									name="schedule"
+									label="Horario"
+									type="text"
+									component={Input}
+								/>
+								<Field
+									name="description"
+									label="Descripción"
+									type="text"
+									component={Textarea}
+								/>
+							</TabPanel>
+							<TabPanel>
+								<Field
+									name="installments"
+									label="Cuotas"
+									component={Installments}
+								/>
+							</TabPanel>
+						</Tabs>
 						<SubmitContainer>
 							<Button
 								success
