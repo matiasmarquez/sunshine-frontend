@@ -17,6 +17,8 @@ export default gql`
 			address
 			phone
 			email
+			school
+			degree
 		}
 	}
 `;

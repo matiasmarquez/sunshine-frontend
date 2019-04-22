@@ -8,6 +8,8 @@ export default gql`
 		$address: String!
 		$phone: String
 		$email: String
+		$school: String
+		$degree: String
 	) {
 		createStudent(
 			data: {
@@ -17,6 +19,8 @@ export default gql`
 				address: $address
 				phone: $phone
 				email: $email
+				school: $school
+				degree: $degree
 			}
 		) {
 			id
@@ -33,6 +37,8 @@ export default gql`
 			address
 			phone
 			email
+			school
+			degree
 		}
 	}
 `;
