@@ -9,6 +9,7 @@ import Input from "./Input";
 import Button from "../Button";
 import Select from "main/components/FormElements/Select";
 import Textarea from "main/components/FormElements/Textarea";
+import DatePicker from "main/components/FormElements/DatePicker";
 
 const Multiple = ({
 	field: { name, value = [] },
@@ -75,6 +76,7 @@ const Multiple = ({
 										optionValue,
 										optionLabel,
 										placeholder,
+										format,
 										colxs,
 										colmd
 									},
@@ -86,15 +88,15 @@ const Multiple = ({
 											md={colmd}
 											key={keyProperty}
 										>
-											{type !== "select" &&
-												type !== "textarea" && (
-													<Field
-														name={`${name}[${key}][${nameProperty}]`}
-														label={label}
-														type={type}
-														component={Input}
-													/>
-												)}
+											{(type === "text" ||
+												type === "number") && (
+												<Field
+													name={`${name}[${key}][${nameProperty}]`}
+													label={label}
+													type={type}
+													component={Input}
+												/>
+											)}
 											{type === "select" && (
 												<Field
 													name={`${name}[${key}][${nameProperty}]`}
@@ -111,6 +113,14 @@ const Multiple = ({
 													name={`${name}[${key}][${nameProperty}`}
 													label={label}
 													component={Textarea}
+												/>
+											)}
+											{type === "date" && (
+												<Field
+													name={`${name}[${key}][${nameProperty}`}
+													label={label}
+													format={format}
+													component={DatePicker}
 												/>
 											)}
 										</Col>
