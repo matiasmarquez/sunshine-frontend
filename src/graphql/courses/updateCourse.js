@@ -31,7 +31,7 @@ export default gql`
 			}
 			installments {
 				id
-				number
+				date
 				price
 			}
 			name
