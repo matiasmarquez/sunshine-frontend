@@ -81,6 +81,24 @@ const Form = props => {
 										type="text"
 										component={Input}
 									/>
+									<Row>
+										<Col md={8}>
+											<Field
+												name="school"
+												label="Escuela"
+												type="text"
+												component={Input}
+											/>
+										</Col>
+										<Col md={4}>
+											<Field
+												name="degree"
+												label="Grado"
+												type="text"
+												component={Input}
+											/>
+										</Col>
+									</Row>
 									<SubmitContainer>
 										<Button
 											success
