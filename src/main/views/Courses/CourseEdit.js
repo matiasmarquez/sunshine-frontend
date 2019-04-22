@@ -27,7 +27,7 @@ const CourseEdit = ({ match, history }) => (
 							]}
 						/>
 						{!loading && !loadingCats && (
-							<Card title="Formulario de edición">
+							<Card>
 								<Form
 									data={data && data.course}
 									mutation={updateMutation}
