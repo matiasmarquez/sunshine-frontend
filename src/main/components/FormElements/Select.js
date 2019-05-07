@@ -14,6 +14,7 @@ const Select = props => {
 		isMulti = false,
 		noOptionsMessage = "No hay opciones disponibles",
 		placeholder,
+		callback,
 		label
 	} = props;
 
@@ -41,6 +42,19 @@ const Select = props => {
 		return "";
 	};
 
+	const setLabel = option => {
+		if (optionLabel instanceof Array) {
+			let out = "";
+			optionLabel.forEach(property => {
+				out += `${option[property]} `;
+			});
+			return out;
+		}
+		if (typeof optionLabel === "string") {
+			return option[optionLabel];
+		}
+	};
+
 	return (
 		<div>
 			<Label label={label} />
@@ -53,7 +67,7 @@ const Select = props => {
 				noOptionsMessage={() => {
 					return noOptionsMessage;
 				}}
-				getOptionLabel={option => option[optionLabel]}
+				getOptionLabel={option => setLabel(option)}
 				getOptionValue={option => option[optionValue]}
 				isMulti={isMulti}
 				closeMenuOnSelect={!isMulti}
@@ -64,6 +78,9 @@ const Select = props => {
 						return;
 					}
 					setFieldValue(name, option);
+					if (callback) {
+						callback(option, setFieldValue);
+					}
 				}}
 			/>
 			<Error>{error && error}</Error>
