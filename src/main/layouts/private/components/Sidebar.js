@@ -88,6 +88,23 @@ const navigation = [
 	},
 	{
 		url: "#4",
+		icon: "clipboard",
+		text: "Inscripciones",
+		childrens: [
+			{
+				url: paths.inscriptionList,
+				icon: "circle",
+				text: "Listar"
+			},
+			{
+				url: paths.inscriptionCreate,
+				icon: "circle",
+				text: "Alta"
+			}
+		]
+	},
+	{
+		url: "#5",
 		icon: "settings",
 		text: "Configuración",
 		childrens: [
