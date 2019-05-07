@@ -20,6 +20,10 @@ import StaffCategoryCreate from "../main/views/staff/category/CategoryCreate";
 import StaffCategoryList from "../main/views/staff/category/CategoryList";
 import StaffCategoryEdit from "../main/views/staff/category/CategoryEdit";
 
+import InscriptionList from "main/views/inscriptions/InscriptionList";
+import InscriptionCreate from "main/views/inscriptions/InscriptionCreate";
+import InscriptionEdit from "main/views/inscriptions/InscriptionEdit";
+
 export const paths = {
 	home: "/",
 
@@ -41,7 +45,11 @@ export const paths = {
 
 	staffCategoryList: "/staff-categorias/listar",
 	staffCategoryCreate: "/staff-categorias/alta",
-	staffCategoryEdit: "/staff-categorias/editar/:id"
+	staffCategoryEdit: "/staff-categorias/editar/:id",
+
+	inscriptionList: "/inscripcion/listar",
+	inscriptionCreate: "/inscripcion/alta",
+	inscriptionEdit: "/inscripcion/editar/:id"
 };
 
 export const routes = {
@@ -109,6 +117,18 @@ export const routes = {
 		{
 			path: paths.staffCategoryEdit,
 			component: StaffCategoryEdit
+		},
+		{
+			path: paths.inscriptionList,
+			component: InscriptionList
+		},
+		{
+			path: paths.inscriptionCreate,
+			component: InscriptionCreate
+		},
+		{
+			path: paths.inscriptionEdit,
+			component: InscriptionEdit
 		}
 	]
 };
