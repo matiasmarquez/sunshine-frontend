@@ -22,6 +22,11 @@ const Topbar = props => {
 							icon: "book-open"
 						},
 						{
+							path: paths.inscriptionList,
+							text: "Inscripciones",
+							icon: "clipboard"
+						},
+						{
 							path: paths.staffList,
 							text: "Staff",
 							icon: "star"
