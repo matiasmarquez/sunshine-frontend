@@ -35,12 +35,12 @@ Object.assign(ReactTableDefaults, {
 });
 
 const DataTable = props => {
-	const { columns, data, ...rest } = props;
+	const { columns, data, defaultPageSize = 10, ...rest } = props;
 
 	return (
 		<StyledReactTable
 			filterable
-			defaultPageSize={12}
+			defaultPageSize={defaultPageSize}
 			className="-striped -highlight"
 			loadingText="Cargando..."
 			noDataText="No se ha encontrado ningún registro"
@@ -92,6 +92,9 @@ const StyledReactTable = styled(ReactTable)`
 		.rt-td {
 			justify-content: flex-start;
 			padding: 10px 20px;
+		}
+		.rt-tbody .rt-td {
+			min-height: 52px;
 		}
 		.rt-tbody .rt-td,
 		.rt-tbody .rt-tr-group {
