@@ -3,17 +3,23 @@ import moment from "moment";
 import styled from "styled-components";
 import _ from "lodash";
 
+import Checkbox from "main/components/FormElements/Checkbox";
+
 import { Field } from "formik";
 import FeatherIcon from "feather-icons-react";
 
 const Installments = ({
-	field: { name, value },
-	form: { errors = null, setFieldValue },
-	label
+	field,
+	withPayment = false,
+	withComment = false,
+	form: { errors = null, setFieldValue }
 }) => {
 	useEffect(() => {
 		addMonths();
 	}, []);
+
+	const name = field.name;
+	const value = field.value ? field.value : [];
 
 	const addMonths = () => {
 		let months = [];
@@ -25,13 +31,20 @@ const Installments = ({
 				const date = moment(installment.date);
 				return date.isSame(month, "month");
 			});
-			months = [
-				...months,
-				{
-					date: month.format("YYYY-MM-DD 23:59:59"),
-					price: installment ? installment.price : 0
+			const newMonth = {
+				date: month.format("YYYY-MM-DD 23:59:59"),
+				price: installment ? installment.price : 0
+			};
+			if (withPayment) {
+				newMonth.paid = installment ? installment.paid : false;
+			}
+			if (withComment) {
+				newMonth.comment = installment ? installment.comment : "";
+				if (newMonth.comment === null) {
+					newMonth.comment = "";
 				}
-			];
+			}
+			months = [...months, newMonth];
 			setFieldValue(name, months);
 		}
 	};
@@ -40,12 +53,32 @@ const Installments = ({
 		<React.Fragment>
 			<Months>
 				{value.map((month, key) => (
-					<Month key={key}>
+					<Month
+						key={key}
+						withPayment={withPayment}
+						withComment={withComment}
+					>
 						<Name>
 							{_.capitalize(moment(month.date).format("MMMM"))}
 						</Name>
 						<Icon icon="dollar-sign" size={25} />
 						<Price name={`${name}[${key}][price]`} type="number" />
+						{withPayment && (
+							<Field
+								name={`${name}[${key}][paid]`}
+								text="Pagado"
+								icon="check-circle"
+								success={true}
+								component={CheckboxStyled}
+							/>
+						)}
+						{withComment && (
+							<Comment
+								name={`${name}[${key}][comment]`}
+								placeholder="Un comentario opcional..."
+								component="textarea"
+							/>
+						)}
 					</Month>
 				))}
 			</Months>
@@ -55,13 +88,45 @@ const Installments = ({
 
 export default Installments;
 
+const Comment = styled(Field)`
+	position: absolute;
+	background: #ffffff;
+	top: 112px;
+	width: 100%;
+	min-height: 70px;
+	padding: 8px;
+	border: 2px solid #eeee;
+	border-top: 2px solid rgba(255, 159, 67, 0.3);
+	color: #565656;
+	&::placeholder {
+		color: #bdbdbd;
+	}
+`;
+
 const Month = styled.div`
 	position: relative;
 	flex: 1 1 auto;
 	margin-right: 15px;
 	margin-bottom: 15px;
+	${props => props.withPayment && `margin-bottom: 52px`};
 	max-width: 220px;
 	min-height: 150px;
+	${props => {
+		if (props.withComment) {
+			return `
+				min-height: 184px
+				${Icon} {
+					height: calc(100% - 95px)
+				}
+				${Price} {
+					height: calc(100% - 95px)
+				}
+				${CheckboxStyled} {
+					top: 68px;
+				}
+			`;
+		}
+	}};
 `;
 
 const Months = styled.div`
@@ -100,4 +165,8 @@ const Price = styled(Field)`
 	&:hover {
 		color: #666;
 	}
+`;
+
+const CheckboxStyled = styled(Checkbox)`
+	border-radius: 0;
 `;
