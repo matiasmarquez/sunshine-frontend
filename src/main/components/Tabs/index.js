@@ -9,7 +9,9 @@ import styled from "styled-components";
 export const Tabs = styled(ReactTabs)``;
 
 export const Tab = styled(ReactTab)`
-	display: block;
+	display: flex;
+	justify-content: center;
+	align-items: center;
 	flex: 1 1 auto;
 	position: relative;
 	background: transparent;
