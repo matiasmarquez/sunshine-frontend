@@ -68,6 +68,21 @@ const GlobalStyle = createGlobalStyle`
     }
   }
 
+  @keyframes pulse {
+    0% {
+      -moz-box-shadow: 0 0 0 0 rgba(234, 84, 85, 0.4);
+      box-shadow: 0 0 0 0 rgba(234, 84, 85, 0.4);
+    }
+    70% {
+        -moz-box-shadow: 0 0 0 10px rgba(234, 84, 85, 0);
+        box-shadow: 0 0 0 10px rgba(234, 84, 85, 0);
+    }
+    100% {
+        -moz-box-shadow: 0 0 0 0 rgba(234, 84, 85, 0);
+        box-shadow: 0 0 0 0 rgba(234, 84, 85, 0);
+    }
+  }
+
   .zoomIn {
     animation-name: zoomIn;
   }
