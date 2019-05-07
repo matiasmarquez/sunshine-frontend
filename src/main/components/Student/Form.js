@@ -16,7 +16,9 @@ const Form = props => {
 		lastName: "",
 		address: "",
 		phone: "",
-		email: ""
+		email: "",
+		school: "",
+		degree: ""
 	};
 
 	const { data = initialValues, mutation, parentTypes, create } = props;
