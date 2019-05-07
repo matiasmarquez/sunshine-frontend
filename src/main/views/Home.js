@@ -1,7 +1,103 @@
 import React from "react";
+import styled from "styled-components";
 
-const Home = props => {
-	return <p>Home</p>;
-};
+import CourseController from "main/controllers/CourseController";
+import StaffController from "main/controllers/StaffController";
+import StudentController from "main/controllers/StudentController";
+import InscriptionController from "main/controllers/InscriptionController";
+
+import { Row, Col } from "react-flexbox-grid";
+
+import Card from "main/components/Card";
+import CardCounter from "main/components/Card/CardCounter";
+import InscriptionsUpToDate from "main/components/Inscription/InscriptionsUpToDate";
+import InscriptionTable from "main/components/Inscription/InscriptionTable";
+
+const Home = props => (
+	<React.Fragment>
+		<RowStyled>
+			<Col md={3}>
+				<CourseController action="list">
+					{({ data, loading }) => (
+						<CardCounter
+							icon="book-open"
+							total={data.courses}
+							series={[0, 100, 50, 200]}
+							text="Cursos"
+							purple
+						/>
+					)}
+				</CourseController>
+			</Col>
+			<Col md={3}>
+				<StaffController action="list">
+					{({ data, loading }) => (
+						<CardCounter
+							icon="star"
+							total={data.staffPeople}
+							series={[0, 300, 200, 300]}
+							text="Staff"
+							green
+						/>
+					)}
+				</StaffController>
+			</Col>
+			<Col md={3}>
+				<StudentController action="list">
+					{({ data, loading }) => (
+						<CardCounter
+							icon="users"
+							total={data.students}
+							series={[0, 200, 300, 100, 300]}
+							text="Alumnos"
+							orange
+						/>
+					)}
+				</StudentController>
+			</Col>
+			<Col md={3}>
+				<InscriptionController action="list">
+					{({ data, loading }) => (
+						<CardCounter
+							icon="clipboard"
+							total={data.inscriptions}
+							series={[0, 100, 350, 200, 350]}
+							text="Inscripciones"
+							red
+						/>
+					)}
+				</InscriptionController>
+			</Col>
+		</RowStyled>
+		<InscriptionController action="list">
+			{({ data, loading, showAlertDelete }) => (
+				<RowStyled>
+					<Col md={7}>
+						<Card p0>
+							<InscriptionTable
+								data={data}
+								loading={loading}
+								showAlertDelete={showAlertDelete}
+								onlyNotPaid
+								{...props}
+							/>
+						</Card>
+					</Col>
+					<Col md={5}>
+						<Card p0 title="Inscripciones al día">
+							<InscriptionsUpToDate
+								inscriptions={data.inscriptions}
+							/>
+						</Card>
+					</Col>
+				</RowStyled>
+			)}
+		</InscriptionController>
+	</React.Fragment>
+);
+
+const RowStyled = styled(Row)`
+	margin-bottom: 30px;
+`;
 
 export default Home;
