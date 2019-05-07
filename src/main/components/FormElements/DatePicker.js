@@ -10,7 +10,7 @@ const DatePicker = ({
 	format,
 	label
 }) => {
-	const error = errors && errors[name];
+	//const error = errors && errors[name];
 
 	const handleOnChange = date => {
 		console.log(date);
