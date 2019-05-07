@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import { Formik, Form as FormFormik, Field } from "formik";
 import _ from "lodash";
 
@@ -21,7 +21,7 @@ const Form = props => {
 		schedule: "",
 		price: 0
 	};
-
+	const [tabActive, setTabActive] = useState(0);
 	const { data = initialValues, categories, create, mutation } = props;
 
 	return (
@@ -43,13 +43,19 @@ const Form = props => {
 						resetForm();
 					}
 				});
+				if (create) {
+					setTabActive(0);
+				}
 			}}
 			initialValues={data}
 			//validationSchema={validationSchema()}
 			render={({ values, errors }) => {
 				return (
 					<FormFormik>
-						<Tabs>
+						<Tabs
+							selectedIndex={tabActive}
+							onSelect={index => setTabActive(index)}
+						>
 							<TabList>
 								<Tab>Información general</Tab>
 								<Tab>Cuotas</Tab>
