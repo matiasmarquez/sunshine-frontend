@@ -3,11 +3,14 @@ import _ from "lodash";
 import { paths } from "../../config/routes";
 import { useQuery, useMutation } from "react-apollo-hooks";
 
-import staffPeopleQuery from "../../graphql/staff/staffPeople";
-import staffPerson from "../../graphql/staff/staffPerson";
-import createStaffPerson from "../../graphql/staff/createStaffPerson";
-import updateStaffPerson from "../../graphql/staff/updateStaffPerson";
-import deleteStaffPerson from "../../graphql/staff/deleteStaffPerson";
+import {
+	staffPeople as staffPeopleQuery,
+	staffPerson,
+	countStaffPeople,
+	createStaffPerson,
+	updateStaffPerson,
+	deleteStaffPerson
+} from "graphql/staff";
 
 import SweetAlert from "../components/SweetAlert";
 import Notification from "../components/Notification";
@@ -19,33 +22,23 @@ const StaffController = ({ match, history, action, children }) => {
 	let error;
 	let loading;
 
-	const {
-		data: dataPeople,
-		error: errorPeople,
-		loading: loadingPeople
-	} = useQuery(staffPeopleQuery, {
-		skip: action !== "list"
-	});
-
-	const {
-		data: dataPerson,
-		error: errorPerson,
-		loading: loadingPerson
-	} = useQuery(staffPerson, {
-		skip: action !== "edit",
-		variables: { id: idPerson }
-	});
-
 	if (action === "list") {
-		data = dataPeople;
-		error = errorPeople;
-		loading = loadingPeople;
+		({ data, error, loading } = useQuery(staffPeopleQuery, {
+			skip: action !== "list"
+		}));
 	}
 
 	if (action === "edit") {
-		data = dataPerson;
-		error = errorPerson;
-		loading = loadingPerson;
+		({ data, error, loading } = useQuery(staffPerson, {
+			skip: action !== "edit",
+			variables: { id: idPerson }
+		}));
+	}
+
+	if (action === "count") {
+		({ data, error, loading } = useQuery(countStaffPeople, {
+			skip: action !== "count"
+		}));
 	}
 
 	const createMutation = useMutation(createStaffPerson, {

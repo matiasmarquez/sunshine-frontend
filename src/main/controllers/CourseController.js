@@ -2,11 +2,14 @@ import _ from "lodash";
 
 import { useQuery, useMutation } from "react-apollo-hooks";
 
-import coursesQuery from "../../graphql/courses/courses";
-import courseQuery from "../../graphql/courses/course";
-import createCourse from "../../graphql/courses/createCourse";
-import updateCourse from "../../graphql/courses/updateCourse";
-import deleteCourse from "../../graphql/courses/deleteCourse";
+import {
+	courses as coursesQuery,
+	course as courseQuery,
+	countCourses as countCoursesQuery,
+	createCourse,
+	updateCourse,
+	deleteCourse
+} from "graphql/course";
 
 import SweetAlert from "../components/SweetAlert";
 import Notification from "../components/Notification";
@@ -18,33 +21,23 @@ const CourseController = ({ match, history, action, children }) => {
 	let error;
 	let loading;
 
-	const {
-		data: dataCourses,
-		error: errorCourses,
-		loading: loadingCourses
-	} = useQuery(coursesQuery, {
-		skip: action !== "list"
-	});
-
-	const {
-		data: dataCourse,
-		error: errorCourse,
-		loading: loadingCourse
-	} = useQuery(courseQuery, {
-		skip: action !== "edit",
-		variables: { id: idCourse }
-	});
-
 	if (action === "list") {
-		data = dataCourses;
-		error = errorCourses;
-		loading = loadingCourses;
+		({ data, error, loading } = useQuery(coursesQuery, {
+			skip: action !== "list"
+		}));
 	}
 
 	if (action === "edit") {
-		data = dataCourse;
-		error = errorCourse;
-		loading = loadingCourse;
+		({ data, error, loading } = useQuery(courseQuery, {
+			skip: action !== "edit",
+			variables: { id: idCourse }
+		}));
+	}
+
+	if (action === "count") {
+		({ data, error, loading } = useQuery(countCoursesQuery, {
+			skip: action !== "count"
+		}));
 	}
 
 	const createMutation = useMutation(createCourse, {
@@ -78,17 +71,20 @@ const CourseController = ({ match, history, action, children }) => {
 
 	const deleteMutation = useMutation(deleteCourse, {
 		update: (cache, { data: { deleteCourse } }) => {
-			const { courses } = cache.readQuery({
-				query: coursesQuery
-			});
-			cache.writeQuery({
-				query: coursesQuery,
-				data: {
-					courses: _.remove(courses, course => {
-						return course.id !== deleteCourse.id;
-					})
-				}
-			});
+			try {
+				const { courses } = cache.readQuery({
+					query: coursesQuery
+				});
+				cache.writeQuery({
+					query: coursesQuery,
+					data: {
+						courses: _.remove(courses, course => {
+							return course.id !== deleteCourse.id;
+						})
+					}
+				});
+			} catch (err) {}
+
 			Notification({
 				text: "Curso eliminado correctamente",
 				type: "success"

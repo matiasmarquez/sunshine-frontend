@@ -3,11 +3,13 @@ import { useQuery, useMutation } from "react-apollo-hooks";
 
 import { paths } from "../../config/routes";
 
-import staffCategoriesQuery from "../../graphql/staff/category/categories";
-import staffCategoryQuery from "../../graphql/staff/category/category";
-import createStaffCategory from "../../graphql/staff/category/createCategory";
-import updateStaffCategory from "../../graphql/staff/category/updateCategory";
-import deleteStaffCategory from "../../graphql/staff/category/deleteCategory";
+import {
+	staffCategories as staffCategoriesQuery,
+	staffCategory as staffCategoryQuery,
+	createStaffCategory,
+	updateStaffCategory,
+	deleteStaffCategory
+} from "graphql/staffCategory";
 
 import Notification from "../components/Notification";
 import SweetAlert from "../components/SweetAlert";
@@ -19,33 +21,17 @@ const StaffCategoryController = ({ match, history, action, children }) => {
 	let error;
 	let loading;
 
-	const {
-		data: dataCategories,
-		error: errorCategories,
-		loading: loadingCategories
-	} = useQuery(staffCategoriesQuery, {
-		skip: action !== "list"
-	});
-
-	const {
-		data: dataCategory,
-		error: errorCategory,
-		loading: loadingCategory
-	} = useQuery(staffCategoryQuery, {
-		skip: action !== "edit",
-		variables: { id: idCategory }
-	});
-
 	if (action === "list") {
-		data = dataCategories;
-		error = errorCategories;
-		loading = loadingCategories;
+		({ data, error, loading } = useQuery(staffCategoriesQuery, {
+			skip: action !== "list"
+		}));
 	}
 
 	if (action === "edit") {
-		data = dataCategory;
-		error = errorCategory;
-		loading = loadingCategory;
+		({ data, error, loading } = useQuery(staffCategoryQuery, {
+			skip: action !== "edit",
+			variables: { id: idCategory }
+		}));
 	}
 
 	const createMutation = useMutation(createStaffCategory, {

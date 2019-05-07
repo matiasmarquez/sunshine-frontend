@@ -3,11 +3,13 @@ import { useQuery, useMutation } from "react-apollo-hooks";
 
 import { paths } from "config/routes";
 
-import courseCategoriesQuery from "graphql/courses/category/categories";
-import courseCategoryQuery from "graphql/courses/category/category";
-import createCourseCategory from "graphql/courses/category/createCategory";
-import updateCourseCategory from "graphql/courses/category/updateCategory";
-import deleteCourseCategory from "graphql/courses/category/deleteCategory";
+import {
+	courseCategories as courseCategoriesQuery,
+	courseCategory as courseCategoryQuery,
+	createCourseCategory,
+	updateCourseCategory,
+	deleteCourseCategory
+} from "graphql/courseCategory";
 
 import Notification from "main/components/Notification";
 import SweetAlert from "main/components/SweetAlert";
@@ -19,33 +21,17 @@ const CourseCategoryController = ({ match, history, action, children }) => {
 	let error;
 	let loading;
 
-	const {
-		data: dataCategories,
-		error: errorCategories,
-		loading: loadingCategories
-	} = useQuery(courseCategoriesQuery, {
-		skip: action !== "list"
-	});
-
-	const {
-		data: dataCategory,
-		error: errorCategory,
-		loading: loadingCategory
-	} = useQuery(courseCategoryQuery, {
-		skip: action !== "edit",
-		variables: { id: idCategory }
-	});
-
 	if (action === "list") {
-		data = dataCategories;
-		error = errorCategories;
-		loading = loadingCategories;
+		({ data, error, loading } = useQuery(courseCategoriesQuery, {
+			skip: action !== "list"
+		}));
 	}
 
 	if (action === "edit") {
-		data = dataCategory;
-		error = errorCategory;
-		loading = loadingCategory;
+		({ data, error, loading } = useQuery(courseCategoryQuery, {
+			skip: action !== "edit",
+			variables: { id: idCategory }
+		}));
 	}
 
 	const createMutation = useMutation(createCourseCategory, {

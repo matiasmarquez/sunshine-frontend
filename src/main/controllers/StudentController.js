@@ -2,11 +2,14 @@ import _ from "lodash";
 
 import { useQuery, useMutation } from "react-apollo-hooks";
 
-import studentsQuery from "../../graphql/students/students";
-import studentQuery from "../../graphql/students/student";
-import createStudent from "../../graphql/students/createStudent";
-import updateStudent from "../../graphql/students/updateStudent";
-import deleteStudent from "../../graphql/students/deleteStudent";
+import {
+	students as studentsQuery,
+	student as studentQuery,
+	countStudents as countStudentsQuery,
+	createStudent,
+	updateStudent,
+	deleteStudent
+} from "graphql/student";
 
 import SweetAlert from "../components/SweetAlert";
 import Notification from "../components/Notification";
@@ -18,33 +21,23 @@ const StudentController = ({ match, history, action, children }) => {
 	let error;
 	let loading;
 
-	const {
-		data: dataStudents,
-		error: errorStudents,
-		loading: loadingStudents
-	} = useQuery(studentsQuery, {
-		skip: action !== "list"
-	});
-
-	const {
-		data: dataStudent,
-		error: errorStudent,
-		loading: loadingStudent
-	} = useQuery(studentQuery, {
-		skip: action !== "edit",
-		variables: { id: idStudent }
-	});
-
 	if (action === "list") {
-		data = dataStudents;
-		error = errorStudents;
-		loading = loadingStudents;
+		({ data, error, loading } = useQuery(studentsQuery, {
+			skip: action !== "list"
+		}));
 	}
 
 	if (action === "edit") {
-		data = dataStudent;
-		error = errorStudent;
-		loading = loadingStudent;
+		({ data, error, loading } = useQuery(studentQuery, {
+			skip: action !== "edit",
+			variables: { id: idStudent }
+		}));
+	}
+
+	if (action === "count") {
+		({ data, error, loading } = useQuery(countStudentsQuery, {
+			skip: action !== "count"
+		}));
 	}
 
 	const createMutation = useMutation(createStudent, {
