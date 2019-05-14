@@ -11,7 +11,7 @@ const client = new ApolloClient({
 			console.log(graphQLErrors);
 		}),
 		new HttpLink({
-			uri: "http://localhost:4000/graphql"
+			uri: "http://192.168.0.11:4000/graphql"
 		})
 	]),
 	cache: new InMemoryCache(),
