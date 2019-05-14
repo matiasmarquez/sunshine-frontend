@@ -5,7 +5,7 @@ import ChartArea from "main/components/Chart/ChartArea";
 import Card from "main/components/Card";
 import IconCircle from "main/components/IconCircle";
 
-const CardCounter = ({ total, text, icon, series, ...rest }) => (
+const CardCounter = ({ total = [], text, icon, series, ...rest }) => (
 	<Card p0>
 		<DataContainer>
 			<IconCircle icon={icon} {...rest} />

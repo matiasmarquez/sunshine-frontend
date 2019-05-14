@@ -25,30 +25,51 @@ const ContentHeader = props => {
 };
 
 const Header = styled.div`
-	display: flex;
+	display: block;
 	flex-wrap: wrap;
 	align-items: center;
 	margin-bottom: 24px;
+	@media (min-width: 768px) {
+		display: flex;
+	}
 `;
 
 const TitleContainer = styled.div`
 	padding-right: 15px;
-	border-right: 1px solid #dae1e7;
+	@media (min-width: 768px) {
+		border-right: 1px solid #dae1e7;
+	}
 `;
 
 const Title = styled.h1`
 	font-size: 24.3px;
+	text-align: center;
 	font-weight: 500;
 	margin-top: 0;
 	margin-bottom: 3px;
 	color: #636363;
+	@media (min-width: 768px) {
+		font-size: 21px;
+		text-align: left;
+	}
+	@media (min-width: 992px) {
+		font-size: 24.3px;
+	}
 `;
 
 const HeaderLeft = styled.div`
-	display: flex;
+	display: block;
 	align-items: center;
 	flex: 2;
+	@media (min-width: 768px) {
+		display: flex;
+	}
 `;
-const HeaderRight = styled.div``;
+const HeaderRight = styled.div`
+	display: none;
+	@media (min-width: 768px) {
+		display: block;
+	}
+`;
 
 export default ContentHeader;

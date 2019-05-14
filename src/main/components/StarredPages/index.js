@@ -27,10 +27,13 @@ const StarredPages = ({ pages }) => (
 export default StarredPages;
 
 const List = styled.ul`
-	display: flex;
+	display: none;
 	list-style: none;
 	margin: 0;
 	padding: 0;
+	@media (min-width: 992px) {
+		display: flex;
+	}
 `;
 
 const Item = styled.li``;

@@ -6,7 +6,7 @@ import StaffController from "main/controllers/StaffController";
 import StudentController from "main/controllers/StudentController";
 import InscriptionController from "main/controllers/InscriptionController";
 
-import { Row, Col } from "react-flexbox-grid";
+import { Row, ColStyled } from "main/components/Grid";
 
 import Card from "main/components/Card";
 import CardCounter from "main/components/Card/CardCounter";
@@ -15,8 +15,8 @@ import InscriptionTable from "main/components/Inscription/InscriptionTable";
 
 const Home = props => (
 	<React.Fragment>
-		<RowStyled>
-			<Col md={3}>
+		<Row>
+			<ColStyled xs={12} sm={6} md={3}>
 				<CourseController action="list">
 					{({ data, loading }) => (
 						<CardCounter
@@ -28,8 +28,8 @@ const Home = props => (
 						/>
 					)}
 				</CourseController>
-			</Col>
-			<Col md={3}>
+			</ColStyled>
+			<ColStyled xs={12} sm={6} md={3}>
 				<StaffController action="list">
 					{({ data, loading }) => (
 						<CardCounter
@@ -41,8 +41,8 @@ const Home = props => (
 						/>
 					)}
 				</StaffController>
-			</Col>
-			<Col md={3}>
+			</ColStyled>
+			<ColStyled xs={12} sm={6} md={3}>
 				<StudentController action="list">
 					{({ data, loading }) => (
 						<CardCounter
@@ -54,8 +54,8 @@ const Home = props => (
 						/>
 					)}
 				</StudentController>
-			</Col>
-			<Col md={3}>
+			</ColStyled>
+			<ColStyled xs={12} sm={6} md={3}>
 				<InscriptionController action="list">
 					{({ data, loading }) => (
 						<CardCounter
@@ -67,12 +67,12 @@ const Home = props => (
 						/>
 					)}
 				</InscriptionController>
-			</Col>
-		</RowStyled>
+			</ColStyled>
+		</Row>
 		<InscriptionController action="list">
 			{({ data, loading, showAlertDelete }) => (
-				<RowStyled>
-					<Col md={7}>
+				<Row>
+					<ColStyled md={7}>
 						<Card p0>
 							<InscriptionTable
 								data={data}
@@ -82,22 +82,18 @@ const Home = props => (
 								{...props}
 							/>
 						</Card>
-					</Col>
-					<Col md={5}>
+					</ColStyled>
+					<ColStyled md={5}>
 						<Card p0 title="Inscripciones al día">
 							<InscriptionsUpToDate
 								inscriptions={data.inscriptions}
 							/>
 						</Card>
-					</Col>
-				</RowStyled>
+					</ColStyled>
+				</Row>
 			)}
 		</InscriptionController>
 	</React.Fragment>
 );
-
-const RowStyled = styled(Row)`
-	margin-bottom: 30px;
-`;
 
 export default Home;

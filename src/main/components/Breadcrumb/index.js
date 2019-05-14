@@ -35,7 +35,11 @@ const Breadcrumb = props => {
 };
 
 const Container = styled.div`
+	display: none;
 	margin-left: 15px;
+	@media (min-width: 768px) {
+		display: block;
+	}
 `;
 
 const List = styled.ul`

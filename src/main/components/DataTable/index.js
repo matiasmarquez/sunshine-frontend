@@ -67,6 +67,7 @@ const StyledReactTable = styled(ReactTable)`
 			border-top: 1px solid rgb(249, 250, 251);
 		}
 		.-pagination .-center {
+			display: none;
 			order: 0;
 			justify-content: flex-start;
 		}
@@ -127,6 +128,11 @@ const StyledReactTable = styled(ReactTable)`
 		}
 		.cursor-pointer {
 			cursor: pointer;
+		}
+		@media (min-width: 992px) {
+			.-pagination .-center {
+				display: flex;
+			}
 		}
 	}
 `;

@@ -1,4 +1,4 @@
-import React, { Component } from "react";
+import React from "react";
 import styled from "styled-components";
 
 import { paths } from "../../../../config/routes";
@@ -6,10 +6,12 @@ import { paths } from "../../../../config/routes";
 import SidebarOption from "./SidebarOption";
 import logo from "../../../../assets/logo1.png";
 
-class Sidebar extends Component {
-	render() {
-		return (
-			<SidebarStyled>
+import LayoutContext from "main/layouts/private/context";
+
+const Sidebar = props => (
+	<LayoutContext.Consumer>
+		{({ folded }) => (
+			<SidebarStyled folded={folded}>
 				<Header>
 					<Logo>
 						<img src={logo} alt="Sunshine" />
@@ -23,9 +25,9 @@ class Sidebar extends Component {
 					</List>
 				</Content>
 			</SidebarStyled>
-		);
-	}
-}
+		)}
+	</LayoutContext.Consumer>
+);
 
 export default Sidebar;
 
@@ -136,7 +138,16 @@ const SidebarStyled = styled.div`
 	background-color: #fff;
 	box-shadow: 0 0 15px 0 rgba(0, 0, 0, 0.05);
 	z-index: 10;
-	left: 0;
+	left: ${props => {
+		if (props.folded) {
+			return "-260px";
+		} else {
+			return "0";
+		}
+	}};
+	@media (min-width: 992px) {
+		left: 0;
+	}
 `;
 const Header = styled.div``;
 const Logo = styled.div`
@@ -157,4 +168,7 @@ const List = styled.ul`
 	padding-left: 0;
 	list-style: none;
 	padding: 16px;
+	max-height: 440px;
+	overflow: hidden;
+	overflow-y: visible;
 `;
