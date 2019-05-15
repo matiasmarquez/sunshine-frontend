@@ -13,10 +13,10 @@ const CategoryEdit = ({ match, history }) => (
 		{({ data, loading, updateMutation }) => (
 			<React.Fragment>
 				<ContentHeader
-					title="Edición de categoría de curso"
+					title="Edición de categoría de staff"
 					breadcrumb={[
 						{
-							text: "Categorías de cursos",
+							text: "Categorías de staff",
 							route: paths.staffCategoryList
 						},
 						{

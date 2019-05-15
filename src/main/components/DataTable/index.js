@@ -35,7 +35,14 @@ Object.assign(ReactTableDefaults, {
 });
 
 const DataTable = props => {
-	const { columns, data, defaultPageSize = 10, ...rest } = props;
+	const {
+		columns,
+		data,
+		defaultPageSize = 10,
+		history,
+		path,
+		...rest
+	} = props;
 
 	return (
 		<StyledReactTable
@@ -49,6 +56,19 @@ const DataTable = props => {
 			rowsText="filas"
 			columns={columns}
 			data={data}
+			getTrProps={(state, rowInfo) => {
+				if (rowInfo) {
+					return {
+						className: "cursor-pointer",
+						onClick: () => {
+							const id = rowInfo.original.id;
+							history.push(path.replace(":id", id));
+						}
+					};
+				} else {
+					return { className: "" };
+				}
+			}}
 			{...rest}
 		/>
 	);

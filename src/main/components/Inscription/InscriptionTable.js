@@ -83,23 +83,11 @@ const InscriptionTable = ({
 							<React.Fragment>
 								<Button
 									flat
-									coral
-									xs
-									typeicon
-									icon="edit-2"
-									path={paths.inscriptionEdit.replace(
-										":id",
-										row.value.id
-									)}
-									mr={5}
-									{...rest}
-								/>
-								<Button
-									flat
 									danger
 									xs
 									typeicon
-									onClick={() => {
+									onClick={e => {
+										e.stopPropagation();
 										showAlertDelete({
 											id: row.value.id
 										});
@@ -116,6 +104,8 @@ const InscriptionTable = ({
 					filterable: false
 				}
 			]}
+			path={paths.inscriptionEdit}
+			{...rest}
 		/>
 	);
 };

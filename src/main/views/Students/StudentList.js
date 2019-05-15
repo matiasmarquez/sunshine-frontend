@@ -81,23 +81,11 @@ const StudentList = props => (
 										<React.Fragment>
 											<Button
 												flat
-												coral
-												xs
-												typeicon
-												icon="edit-2"
-												path={paths.studentEdit.replace(
-													":id",
-													value.id
-												)}
-												mr={5}
-												{...props}
-											/>
-											<Button
-												flat
 												danger
 												xs
 												typeicon
-												onClick={() => {
+												onClick={e => {
+													e.stopPropagation();
 													showAlertDelete({
 														id: value.id,
 														name: value.name,
@@ -116,6 +104,8 @@ const StudentList = props => (
 								filterable: false
 							}
 						]}
+						path={paths.studentEdit}
+						{...props}
 					/>
 				</Card>
 			</React.Fragment>
