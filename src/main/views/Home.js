@@ -1,5 +1,4 @@
 import React from "react";
-import styled from "styled-components";
 
 import CourseController from "main/controllers/CourseController";
 import StaffController from "main/controllers/StaffController";
