@@ -3,7 +3,8 @@ import moment from "moment";
 import styled from "styled-components";
 import _ from "lodash";
 
-import Checkbox from "main/components/FormElements/Checkbox";
+import Checkbox from "./Checkbox";
+import Error from "./Error";
 
 import { Field } from "formik";
 import FeatherIcon from "feather-icons-react";
@@ -12,7 +13,7 @@ const Installments = ({
 	field,
 	withPayment = false,
 	withComment = false,
-	form: { errors = null, setFieldValue }
+	form: { errors = null, touched, setFieldValue }
 }) => {
 	useEffect(() => {
 		addMonths();
@@ -79,6 +80,17 @@ const Installments = ({
 								component="textarea"
 							/>
 						)}
+						<ErrorStyled
+							text={
+								errors[name] &&
+								errors[name][key] &&
+								errors[name][key]["price"] &&
+								touched[name] &&
+								touched[name][key] &&
+								errors[name][key]["price"]
+							}
+							withComment={withComment}
+						/>
 					</Month>
 				))}
 			</Months>
@@ -87,6 +99,13 @@ const Installments = ({
 };
 
 export default Installments;
+
+const ErrorStyled = styled(Error)`
+	&& {
+		top: 0;
+		${props => props.withComment && `top: 69px`};
+	}
+`;
 
 const Comment = styled(Field)`
 	position: absolute;
@@ -107,8 +126,8 @@ const Month = styled.div`
 	position: relative;
 	flex: 1 1 auto;
 	margin-right: 15px;
-	margin-bottom: 15px;
-	${props => props.withPayment && `margin-bottom: 52px`};
+	margin-bottom: 25px;
+	${props => props.withPayment && `margin-bottom: 62px`};
 	max-width: 220px;
 	min-height: 150px;
 	${props => {

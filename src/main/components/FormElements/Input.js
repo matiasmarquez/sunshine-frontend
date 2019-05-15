@@ -2,11 +2,12 @@ import React from "react";
 import styled from "styled-components";
 
 import Label from "./Label";
+import Error from "./Error";
 
 const Input = props => {
 	const {
 		field: { name, onChange },
-		form: { errors = null },
+		form: { errors = null, touched },
 		type,
 		label
 	} = props;
@@ -27,17 +28,10 @@ const Input = props => {
 				type={type}
 				onChange={onChange}
 			/>
-			<Error>{error && error}</Error>
+			<Error text={error && touched[name] && error} />
 		</React.Fragment>
 	);
 };
-
-const Error = styled.p`
-	color: #ff4f56;
-	font-size: 12px;
-	margin: 0;
-	margin-top: 5px;
-`;
 
 const InputStyled = styled.input`
 	display: block;

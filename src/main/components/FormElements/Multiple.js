@@ -6,6 +6,7 @@ import { Field } from "formik";
 import { Row, Col } from "react-flexbox-grid";
 
 import Input from "./Input";
+import Error from "./Error";
 import Button from "../Button";
 import Select from "main/components/FormElements/Select";
 import Textarea from "main/components/FormElements/Textarea";
@@ -13,7 +14,7 @@ import DatePicker from "main/components/FormElements/DatePicker";
 
 const Multiple = ({
 	field: { name, value = [] },
-	form: { errors = null, setFieldValue },
+	form: { errors = null, setFieldValue, touched },
 	withCols,
 	colxsrow,
 	rowAsCard,
@@ -123,6 +124,20 @@ const Multiple = ({
 													component={DatePicker}
 												/>
 											)}
+											<Error
+												text={
+													errors[name] &&
+													errors[name][key] &&
+													errors[name][key][
+														nameProperty
+													] &&
+													touched[name] &&
+													touched[name][key] &&
+													errors[name][key][
+														nameProperty
+													]
+												}
+											/>
 										</Col>
 									);
 								}

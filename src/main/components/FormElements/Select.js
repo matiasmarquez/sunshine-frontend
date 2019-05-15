@@ -2,12 +2,13 @@ import React from "react";
 import styled from "styled-components";
 
 import Label from "./Label";
+import Error from "./Error";
 import ReactSelect from "react-select";
 
 const Select = props => {
 	const {
 		field: { name },
-		form: { errors = null, setFieldValue },
+		form: { errors = null, touched, setFieldValue },
 		options,
 		optionValue,
 		optionLabel,
@@ -83,19 +84,12 @@ const Select = props => {
 					}
 				}}
 			/>
-			<Error>{error && error}</Error>
+			<Error text={error && touched[name] && error} />
 		</div>
 	);
 };
 
 export default Select;
-
-const Error = styled.p`
-	color: #ff4f56;
-	font-size: 12px;
-	margin: 0;
-	margin-top: 5px;
-`;
 
 const ReactSelectStyled = styled(ReactSelect)`
 	font-family: "Open Sans", sans-serif;

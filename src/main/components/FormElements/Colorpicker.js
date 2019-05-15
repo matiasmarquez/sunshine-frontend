@@ -3,11 +3,12 @@ import styled from "styled-components";
 import { BlockPicker } from "react-color";
 
 import Label from "./Label";
+import Error from "./Error";
 
 const Colorpicker = props => {
 	const {
 		field: { name, value },
-		form: { errors = null, setFieldValue },
+		form: { errors = null, touched, setFieldValue },
 		label
 	} = props;
 
@@ -36,19 +37,12 @@ const Colorpicker = props => {
 					setFieldValue(name, hex);
 				}}
 			/>
-			<Error>{error && error}</Error>
+			<Error text={error && touched[name] && error} />
 		</React.Fragment>
 	);
 };
 
 export default Colorpicker;
-
-const Error = styled.p`
-	color: #ff4f56;
-	font-size: 12px;
-	margin: 0;
-	margin-top: 5px;
-`;
 
 const BlockPickerStyled = styled(BlockPicker)`
 	margin-bottom: 15px;
