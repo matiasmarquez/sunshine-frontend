@@ -1,5 +1,6 @@
 import React from "react";
 import { Formik, Form as FormFormik, Field } from "formik";
+import * as Yup from "yup";
 
 import Button from "../Button";
 import Input from "../FormElements/Input";
@@ -24,6 +25,15 @@ const Form = props => {
 		mutation
 	} = props;
 
+	const validationSchema = Yup.object().shape({
+		name: Yup.string().required("El nombre es requerido"),
+		lastName: Yup.string().required("El apellido es requerido"),
+		category: Yup.string()
+			.required("La categoría es requerida")
+			.nullable(),
+		courses: Yup.array().required("Los cursos son requeridos")
+	});
+
 	return (
 		<Formik
 			onSubmit={({ category, courses, ...rest }, { resetForm }) => {
@@ -44,7 +54,7 @@ const Form = props => {
 				});
 			}}
 			initialValues={data}
-			//validationSchema={validationSchema()}
+			validationSchema={validationSchema}
 			render={({ values, errors }) => {
 				return (
 					<FormFormik>

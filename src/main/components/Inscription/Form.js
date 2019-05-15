@@ -1,5 +1,8 @@
 import React, { useState } from "react";
+import styled from "styled-components";
 import { Formik, Form as FormFormik, Field } from "formik";
+import * as Yup from "yup";
+
 import _ from "lodash";
 
 import Button from "main/components/Button";
@@ -17,15 +20,37 @@ const Form = props => {
 		course: null,
 		student: null,
 		installments: [],
-		price: null
+		price: undefined
 	};
 	const [tabActive, setTabActive] = useState(0);
 	const { data = initialValues, courses, students, mutation, create } = props;
 
+	const validationSchema = Yup.object().shape({
+		course: Yup.string()
+			.required("El curso es requerido")
+			.nullable(),
+		student: Yup.string()
+			.required("El alumno es requerido")
+			.nullable(),
+		installments: Yup.array()
+			.of(
+				Yup.object().shape({
+					price: Yup.number()
+						.moreThan(0, "El precio debe ser mayor a $0")
+						.integer("El precio es requerido")
+						.required("El precio es requerido")
+						.transform((cv, ov) => {
+							return ov === "" ? undefined : cv;
+						})
+				})
+			)
+			.required("Las cuotas son requeridas")
+	});
+
 	return (
 		<Formik
 			onSubmit={(
-				{ course, student, installments, ...rest },
+				{ course, student, installments, price, ...rest },
 				{ resetForm }
 			) => {
 				const filtered = [];
@@ -37,7 +62,8 @@ const Form = props => {
 						...rest,
 						courseId: course.id,
 						studentId: student.id,
-						installments: filtered
+						installments: filtered,
+						price
 					}
 				});
 				result.then(res => {
@@ -50,7 +76,7 @@ const Form = props => {
 				}
 			}}
 			initialValues={data}
-			//validationSchema={validationSchema()}
+			validationSchema={validationSchema}
 			render={({ values, errors }) => {
 				return (
 					<FormFormik>
@@ -62,6 +88,9 @@ const Form = props => {
 								<Tab>Información general</Tab>
 								<Tab>
 									Cuotas{" "}
+									{errors && errors["installments"] && (
+										<ErrorInstallments>!</ErrorInstallments>
+									)}
 									{!create && (
 										<Alert
 											ml={10}
@@ -125,5 +154,16 @@ const Form = props => {
 		/>
 	);
 };
+
+const ErrorInstallments = styled.span`
+	color: ${props => `rgb(${props.theme.danger})`};
+	background: #fff;
+	animation: pulse 2s infinite;
+	margin-left: 7px;
+	width: 18px;
+	height: 18px;
+	font-weight: 600;
+	border-radius: 4px;
+`;
 
 export default Form;

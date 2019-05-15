@@ -1,5 +1,6 @@
 import React from "react";
 import { Formik, Form as FormFormik, Field } from "formik";
+import * as Yup from "yup";
 
 import _ from "lodash";
 
@@ -22,6 +23,20 @@ const Form = props => {
 	};
 
 	const { data = initialValues, mutation, parentTypes, create } = props;
+
+	const validationSchema = Yup.object().shape({
+		name: Yup.string().required("El nombre es requerido"),
+		lastName: Yup.string().required("El apellido es requerido"),
+		parents: Yup.array()
+			.required("Al menos un familiar es requerido")
+			.of(
+				Yup.object().shape({
+					type: Yup.string().required("La relación es requerida"),
+					name: Yup.string().required("El nombre es requerido"),
+					lastName: Yup.string().required("El apellido es requerido")
+				})
+			)
+	});
 
 	return (
 		<Formik
@@ -46,7 +61,7 @@ const Form = props => {
 				});
 			}}
 			initialValues={data}
-			//validationSchema={validationSchema()}
+			validationSchema={validationSchema}
 			render={({ values, errors }) => {
 				return (
 					<FormFormik>

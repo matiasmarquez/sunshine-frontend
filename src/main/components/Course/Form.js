@@ -1,5 +1,8 @@
 import React, { useState } from "react";
+import styled from "styled-components";
 import { Formik, Form as FormFormik, Field } from "formik";
+import * as Yup from "yup";
+
 import _ from "lodash";
 
 import Button from "main/components/Button";
@@ -23,6 +26,26 @@ const Form = props => {
 	};
 	const [tabActive, setTabActive] = useState(0);
 	const { data = initialValues, categories, create, mutation } = props;
+
+	const validationSchema = Yup.object().shape({
+		name: Yup.string().required("El nombre es requerido"),
+		category: Yup.string()
+			.required("La categoría es requerida")
+			.nullable(),
+		installments: Yup.array()
+			.of(
+				Yup.object().shape({
+					price: Yup.number()
+						.moreThan(0, "El precio debe ser mayor a $0")
+						.integer("El precio es requerido")
+						.required("El precio es requerido")
+						.transform((cv, ov) => {
+							return ov === "" ? undefined : cv;
+						})
+				})
+			)
+			.required("Las cuotas son requeridas")
+	});
 
 	return (
 		<Formik
@@ -48,7 +71,7 @@ const Form = props => {
 				}
 			}}
 			initialValues={data}
-			//validationSchema={validationSchema()}
+			validationSchema={validationSchema}
 			render={({ values, errors }) => {
 				return (
 					<FormFormik>
@@ -58,7 +81,12 @@ const Form = props => {
 						>
 							<TabList>
 								<Tab>Información general</Tab>
-								<Tab>Cuotas</Tab>
+								<Tab>
+									Cuotas{" "}
+									{errors && errors["installments"] && (
+										<ErrorInstallments>!</ErrorInstallments>
+									)}
+								</Tab>
 							</TabList>
 							<TabPanel>
 								<Field
@@ -117,5 +145,15 @@ const Form = props => {
 		/>
 	);
 };
+
+const ErrorInstallments = styled.span`
+	color: ${props => `rgb(${props.theme.danger})`};
+	animation: pulse 2s infinite;
+	margin-left: 7px;
+	width: 18px;
+	height: 18px;
+	font-weight: 600;
+	border-radius: 4px;
+`;
 
 export default Form;
