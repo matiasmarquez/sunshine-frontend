@@ -47,4 +47,9 @@ export const TabList = styled(ReactTabList)`
 	}
 `;
 
-export const TabPanel = styled(ReactTabPanel)``;
+export const TabPanel = styled(ReactTabPanel)`
+	display: none;
+	&.react-tabs__tab-panel--selected {
+		display: block;
+	}
+`;
