@@ -9,6 +9,8 @@ const Input = props => {
 		field: { name, onChange },
 		form: { errors = null, touched },
 		type,
+		helpText,
+		autocomplete,
 		label
 	} = props;
 
@@ -27,7 +29,9 @@ const Input = props => {
 				value={value}
 				type={type}
 				onChange={onChange}
+				autoComplete={autocomplete}
 			/>
+			{helpText && <HelpText>{helpText}</HelpText>}
 			<Error text={error && touched[name] && error} />
 		</React.Fragment>
 	);
@@ -52,6 +56,16 @@ const InputStyled = styled.input`
 			return `1px solid rgb(${props.theme.primary})`;
 		}};
 	}
+`;
+
+const HelpText = styled.p`
+	font-size: 11px;
+	font-weight: 500;
+	margin: 0;
+	margin-top: 5px;
+	position: relative;
+	color: #a5a5a5;
+	top: -13px;
 `;
 
 export default Input;
