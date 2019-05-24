@@ -37,7 +37,7 @@ export const countStudents = gql`
 `;
 
 export const student = gql`
-	query student($id: String!) {
+	query student($id: ID!) {
 		student(id: $id) {
 			...studentFields
 		}
