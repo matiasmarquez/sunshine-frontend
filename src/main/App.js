@@ -1,9 +1,16 @@
 import React from "react";
-import { BrowserRouter, Switch, Route } from "react-router-dom";
+import { BrowserRouter, Switch, Route, Redirect } from "react-router-dom";
 
-import { routes } from "../config/routes";
+import { routes, paths } from "../config/routes";
 
-import Layout from "./layouts/private";
+import AuthController from "main/controllers/AuthController";
+
+import PrivateLayout from "./layouts/private";
+import PublicLayout from "./layouts/public";
+import CleanLayout from "./layouts/clean";
+import Login from "./views/Login";
+import Page404 from "./views/Page404";
+import LoadingView from "./views/Loading";
 
 const AppRoute = ({ component: Component, layout: Layout, ...rest }) => (
 	<Route
@@ -16,21 +23,46 @@ const AppRoute = ({ component: Component, layout: Layout, ...rest }) => (
 	/>
 );
 
-const App = props => {
-	const routesComponents = routes.private.map(
-		({ path, component: Component }) => (
-			<AppRoute
-				exact
-				path={path}
-				layout={Layout}
-				component={Component}
-				key="route"
-			/>
-		)
+const App = () => {
+	let routesComponents = routes.map(({ path, component: Component }) => (
+		<AppRoute
+			exact
+			path={path}
+			component={Component}
+			layout={PrivateLayout}
+			key="route"
+		/>
+	));
+	routesComponents.push(
+		<AppRoute
+			exact
+			path="/login"
+			component={Login}
+			layout={PublicLayout}
+			key="route"
+		/>
 	);
 	return (
 		<BrowserRouter>
-			<Switch>{routesComponents}</Switch>
+			<AuthController>
+				{({ user, loading, location }) => {
+					if (loading) {
+						return <LoadingView />;
+					}
+					if (!user && location.pathname !== paths.login) {
+						return <Redirect to={paths.login} />;
+					}
+					return (
+						<Switch>
+							{routesComponents}
+							<AppRoute
+								component={Page404}
+								layout={CleanLayout}
+							/>
+						</Switch>
+					);
+				}}
+			</AuthController>
 		</BrowserRouter>
 	);
 };
