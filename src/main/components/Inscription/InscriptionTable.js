@@ -6,6 +6,7 @@ import { paths } from "config/routes";
 import DataTable from "main/components/DataTable";
 import Button from "main/components/Button";
 import Alert from "main/components/Inscription/Alert";
+import DateComponent from "main/components/Date";
 
 const InscriptionTable = ({
 	data,
@@ -39,6 +40,23 @@ const InscriptionTable = ({
 				{
 					Header: "Curso",
 					accessor: "course.name"
+				},
+				{
+					Header: "Iniciada",
+					accessor: "created",
+					Cell: row => {
+						var date = new Date(row.original.created);
+						return (
+							<React.Fragment>
+								<DateComponent
+									date={date}
+									textBeforeMonth=" del "
+									withMonth
+									withYear
+								/>
+							</React.Fragment>
+						);
+					}
 				},
 				{
 					Header: "Cuotas no pagas",
