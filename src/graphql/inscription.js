@@ -21,6 +21,7 @@ const inscriptionFragment = gql`
 		}
 		price
 		state
+		created
 		hasInstallmentsNotPayed
 	}
 `;
@@ -28,6 +29,15 @@ const inscriptionFragment = gql`
 export const inscriptions = gql`
 	query inscriptions {
 		inscriptions {
+			...inscriptionFields
+		}
+	}
+	${inscriptionFragment}
+`;
+
+export const inscriptionsOfThisYear = gql`
+	query inscriptionsOfThisYear {
+		inscriptionsOfThisYear {
 			...inscriptionFields
 		}
 	}
