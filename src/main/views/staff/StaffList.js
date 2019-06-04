@@ -8,7 +8,7 @@ import DataTable from "../../components/DataTable";
 import Card from "../../components/Card";
 import Button from "../../components/Button";
 
-const CourseList = props => (
+const StaffList = props => (
 	<StaffController action="list">
 		{({ data, loading, showAlertDelete }) => (
 			<React.Fragment>
@@ -99,4 +99,4 @@ const CourseList = props => (
 	</StaffController>
 );
 
-export default CourseList;
+export default StaffList;
