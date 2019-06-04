@@ -3,14 +3,16 @@ import styled from "styled-components";
 
 import FeatherIcon from "feather-icons-react";
 
-const Checkbox = ({
-	text,
-	icon,
-	field: { name, onChange, value },
-	form: { errors = null },
-	...rest
-}) => {
-	//const error = errors && errors[name];
+const Checkbox = props => {
+	const {
+		text,
+		icon,
+		field: { name, onChange },
+		type,
+		...rest
+	} = props;
+
+	let { value } = props.field;
 	if (value === null) {
 		value = false;
 	}
