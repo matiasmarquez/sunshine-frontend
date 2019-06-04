@@ -3,12 +3,12 @@ import styled from "styled-components";
 
 import { paths } from "config/routes";
 import StarredPages from "main/components/StarredPages";
-import FeatherIcon from "feather-icons-react";
 
 import LayoutContext from "main/layouts/private/context";
 import ButtonMenu from "./ButtonMenu";
+import TopbarAuth from "./TopbarAuth";
 
-const Topbar = props => (
+const Topbar = ({ history }) => (
 	<LayoutContext.Consumer>
 		{({ toggleFolded }) => (
 			<Wrapper>
@@ -38,15 +38,7 @@ const Topbar = props => (
 							}
 						]}
 					/>
-					<IdentityInfo>
-						<IdentityInfoContainer>
-							<IdentityName>Sheila Weksler</IdentityName>
-							<IdentityRole>Administrador</IdentityRole>
-						</IdentityInfoContainer>
-						<IdentityIconContainer>
-							<FeatherIcon icon="user" size={20} />
-						</IdentityIconContainer>
-					</IdentityInfo>
+					<TopbarAuth history={history} />
 				</Navbar>
 			</Wrapper>
 		)}
@@ -54,35 +46,6 @@ const Topbar = props => (
 );
 
 export default Topbar;
-
-const IdentityInfo = styled.div`
-	display: flex;
-	align-items: center;
-`;
-
-const IdentityInfoContainer = styled.div`
-	text-align: right;
-	margin-right: 10.5px;
-`;
-
-const IdentityName = styled.p`
-	font-weight: 600;
-	margin: 0;
-	color: #626262;
-`;
-
-const IdentityRole = styled.small`
-	color: #626262;
-`;
-
-const IdentityIconContainer = styled.div`
-	background: #efefef;
-	width: 32px;
-	height: 32px;
-	text-align: center;
-	padding: 5px;
-	border-radius: 50%;
-`;
 
 const Navbar = styled.header`
 	display: flex;
