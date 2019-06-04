@@ -68,13 +68,16 @@ const Home = props => (
 				</InscriptionController>
 			</ColStyled>
 		</Row>
-		<InscriptionController action="list">
+		<InscriptionController action="listOfThisYear">
 			{({ data, loading, showAlertDelete }) => (
 				<Row>
 					<ColStyled md={7}>
 						<Card p0>
 							<InscriptionTable
-								data={data}
+								data={{
+									inscriptions:
+										data && data.inscriptionsOfThisYear
+								}}
 								loading={loading}
 								showAlertDelete={showAlertDelete}
 								onlyNotPaid
@@ -83,9 +86,12 @@ const Home = props => (
 						</Card>
 					</ColStyled>
 					<ColStyled md={5}>
-						<Card p0 title="Inscripciones al día">
+						<Card
+							p0
+							title={`Inscripciones al día del ${new Date().getFullYear()}`}
+						>
 							<InscriptionsUpToDate
-								inscriptions={data.inscriptions}
+								inscriptions={data.inscriptionsOfThisYear}
 							/>
 						</Card>
 					</ColStyled>
