@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import styled from "styled-components";
 import { Formik, Form as FormFormik, Field } from "formik";
 import * as Yup from "yup";
+import moment from "moment";
 
 import _ from "lodash";
 
@@ -83,6 +84,7 @@ const Form = props => {
 						<Tabs
 							selectedIndex={tabActive}
 							onSelect={index => setTabActive(index)}
+							forceRenderTabPanel={true}
 						>
 							<TabList>
 								<Tab>Información general</Tab>
@@ -109,10 +111,21 @@ const Form = props => {
 									placeholder="Seleccionar curso"
 									component={Select}
 									callback={(option, setValue) => {
-										setValue(
-											"installments",
-											option.installments
+										const installments = _.map(
+											option.installments,
+											installment => {
+												installment.paid = false;
+												installment.comment = "";
+												installment.date = moment(
+													installment.date
+												)
+													.hour(23)
+													.minute(59)
+													.second(59);
+												return installment;
+											}
 										);
+										setValue("installments", installments);
 									}}
 								/>
 								<Field
