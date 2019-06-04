@@ -40,7 +40,10 @@ const Installments = ({
 				newMonth.paid = installment ? installment.paid : false;
 			}
 			if (withComment) {
-				newMonth.comment = installment ? installment.comment : "";
+				newMonth.comment =
+					installment && installment.comment
+						? installment.comment
+						: "";
 				if (newMonth.comment === null) {
 					newMonth.comment = "";
 				}
