@@ -4,12 +4,16 @@ import styled from "styled-components";
 import ChartArea from "main/components/Chart/ChartArea";
 import Card from "main/components/Card";
 import IconCircle from "main/components/IconCircle";
+import Loading from "main/components/Loading";
 
-const CardCounter = ({ total = [], text, icon, series, ...rest }) => (
+const CardCounter = ({ total, text, icon, series, ...rest }) => (
 	<Card p0>
 		<DataContainer>
 			<IconCircle icon={icon} {...rest} />
-			<Total>{total && total.length}</Total>
+			<Total>
+				{!total && <Loading small />}
+				{total && total.length}
+			</Total>
 			<Title>{text}</Title>
 		</DataContainer>
 		<ChartContainer>
