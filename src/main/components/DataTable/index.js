@@ -35,12 +35,19 @@ Object.assign(ReactTableDefaults, {
 });
 
 const DataTable = props => {
-	const { columns, data, ...rest } = props;
+	const {
+		columns,
+		data,
+		defaultPageSize = 10,
+		history,
+		path,
+		...rest
+	} = props;
 
 	return (
 		<StyledReactTable
 			filterable
-			defaultPageSize={12}
+			defaultPageSize={defaultPageSize}
 			className="-striped -highlight"
 			loadingText="Cargando..."
 			noDataText="No se ha encontrado ningún registro"
@@ -49,6 +56,19 @@ const DataTable = props => {
 			rowsText="filas"
 			columns={columns}
 			data={data}
+			getTrProps={(state, rowInfo) => {
+				if (rowInfo) {
+					return {
+						className: "cursor-pointer",
+						onClick: () => {
+							const id = rowInfo.original.id;
+							history.push(path.replace(":id", id));
+						}
+					};
+				} else {
+					return { className: "" };
+				}
+			}}
 			{...rest}
 		/>
 	);
@@ -67,6 +87,7 @@ const StyledReactTable = styled(ReactTable)`
 			border-top: 1px solid rgb(249, 250, 251);
 		}
 		.-pagination .-center {
+			display: none;
 			order: 0;
 			justify-content: flex-start;
 		}
@@ -92,6 +113,9 @@ const StyledReactTable = styled(ReactTable)`
 		.rt-td {
 			justify-content: flex-start;
 			padding: 10px 20px;
+		}
+		.rt-tbody .rt-td {
+			min-height: 52px;
 		}
 		.rt-tbody .rt-td,
 		.rt-tbody .rt-tr-group {
@@ -124,6 +148,11 @@ const StyledReactTable = styled(ReactTable)`
 		}
 		.cursor-pointer {
 			cursor: pointer;
+		}
+		@media (min-width: 992px) {
+			.-pagination .-center {
+				display: flex;
+			}
 		}
 	}
 `;

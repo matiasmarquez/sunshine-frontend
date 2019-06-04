@@ -2,12 +2,15 @@ import React from "react";
 import styled from "styled-components";
 
 import Label from "./Label";
+import Error from "./Error";
 
 const Input = props => {
 	const {
 		field: { name, onChange },
-		form: { errors = null },
+		form: { errors = null, touched },
 		type,
+		helpText,
+		autocomplete,
 		label
 	} = props;
 
@@ -26,18 +29,13 @@ const Input = props => {
 				value={value}
 				type={type}
 				onChange={onChange}
+				autoComplete={autocomplete}
 			/>
-			<Error>{error && error}</Error>
+			{helpText && <HelpText>{helpText}</HelpText>}
+			<Error text={error && touched[name] && error} />
 		</React.Fragment>
 	);
 };
-
-const Error = styled.p`
-	color: #ff4f56;
-	font-size: 12px;
-	margin: 0;
-	margin-top: 5px;
-`;
 
 const InputStyled = styled.input`
 	display: block;
@@ -58,6 +56,16 @@ const InputStyled = styled.input`
 			return `1px solid rgb(${props.theme.primary})`;
 		}};
 	}
+`;
+
+const HelpText = styled.p`
+	font-size: 11px;
+	font-weight: 500;
+	margin: 0;
+	margin-top: 5px;
+	position: relative;
+	color: #a5a5a5;
+	top: -13px;
 `;
 
 export default Input;

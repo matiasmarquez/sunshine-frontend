@@ -1,15 +1,16 @@
 import React from "react";
-import { BrowserRouter, Switch, Route } from "react-router-dom";
+import { BrowserRouter, Switch, Route, Redirect } from "react-router-dom";
 
-import Layout from "./layouts/private";
-import Home from "./views/Home";
+import { routes, paths } from "../config/routes";
 
-import StudentCreate from "./views/Students/StudentCreate";
-import StudentEdit from "./views/Students/StudentEdit";
-import StudentList from "./views/Students/StudentList";
+import AuthController from "main/controllers/AuthController";
 
-import CourseList from "./views/Courses/CourseList";
-import CourseEdit from "./views/Courses/CourseEdit";
+import PrivateLayout from "./layouts/private";
+import PublicLayout from "./layouts/public";
+import CleanLayout from "./layouts/clean";
+import Login from "./views/Login";
+import Page404 from "./views/Page404";
+import LoadingView from "./views/Loading";
 
 const AppRoute = ({ component: Component, layout: Layout, ...rest }) => (
 	<Route
@@ -22,43 +23,46 @@ const AppRoute = ({ component: Component, layout: Layout, ...rest }) => (
 	/>
 );
 
-const App = props => {
+const App = () => {
+	let routesComponents = routes.map(({ path, component: Component }) => (
+		<AppRoute
+			exact
+			path={path}
+			component={Component}
+			layout={PrivateLayout}
+			key="route"
+		/>
+	));
+	routesComponents.push(
+		<AppRoute
+			exact
+			path="/login"
+			component={Login}
+			layout={PublicLayout}
+			key="route"
+		/>
+	);
 	return (
 		<BrowserRouter>
-			<Switch>
-				<AppRoute exact path="/" layout={Layout} component={Home} />
-				<AppRoute
-					exact
-					path="/alumnos/listar"
-					layout={Layout}
-					component={StudentList}
-				/>
-				<AppRoute
-					exact
-					path="/alumnos/alta"
-					layout={Layout}
-					component={StudentCreate}
-				/>
-				<AppRoute
-					exact
-					path="/alumnos/editar/:id"
-					layout={Layout}
-					component={StudentEdit}
-				/>
-
-				<AppRoute
-					exact
-					path="/cursos/listar"
-					layout={Layout}
-					component={CourseList}
-				/>
-				<AppRoute
-					exact
-					path="/cursos/editar/:id"
-					layout={Layout}
-					component={CourseEdit}
-				/>
-			</Switch>
+			<AuthController>
+				{({ user, loading, location }) => {
+					if (loading) {
+						return <LoadingView />;
+					}
+					if (!user && location.pathname !== paths.login) {
+						return <Redirect to={paths.login} />;
+					}
+					return (
+						<Switch>
+							{routesComponents}
+							<AppRoute
+								component={Page404}
+								layout={CleanLayout}
+							/>
+						</Switch>
+					);
+				}}
+			</AuthController>
 		</BrowserRouter>
 	);
 };

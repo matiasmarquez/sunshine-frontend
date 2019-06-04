@@ -8,7 +8,7 @@ import FeatherIcon from "feather-icons-react";
 import "noty/lib/noty.css";
 import "noty/lib/themes/sunset.css";
 
-const Notification = ({ type, text, timeout = 3000 }) => {
+const Notification = ({ type, text, timeout = 4000 }) => {
 	const template = (
 		<Box type={type}>
 			<Icon>
@@ -43,6 +43,12 @@ const Box = styled.div`
 		props.type === "success" &&
 		`
         background: #15bd76;
+        color: #fff;
+    `};
+	${props =>
+		props.type === "error" &&
+		`
+        background: rgb(234, 84, 85);
         color: #fff;
     `};
 `;

@@ -36,7 +36,7 @@ const Wrapper = styled.div`
 	position: relative;
 	min-height: calc(100% - 123px);
 	transition: all 0.3s ease;
-	padding-top: 70px;
+	padding-top: 110px;
 
 	@media (min-width: 992px) {
 		padding-left: 260px;

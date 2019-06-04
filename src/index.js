@@ -11,6 +11,10 @@ import GlobalStyle from "./main/themes/GlobalStyle";
 import { ThemeProvider } from "styled-components";
 import theme from "./main/themes/theme";
 
+import moment from "moment";
+import "moment/locale/es";
+moment.locale("es");
+
 ReactDOM.render(
 	<ApolloProvider client={ApolloClient}>
 		<ApolloHooksProvider client={ApolloClient}>
