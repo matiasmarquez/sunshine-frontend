@@ -4,7 +4,7 @@ import styled from "styled-components";
 import { paths } from "../../../../config/routes";
 
 import SidebarOption from "./SidebarOption";
-import logo from "../../../../assets/logo1.png";
+import logo from "../../../../assets/logo.png";
 
 import LayoutContext from "main/layouts/private/context";
 
@@ -119,6 +119,11 @@ const navigation = [
 				url: paths.staffCategoryList,
 				icon: "circle",
 				text: "Categorías staff"
+			},
+			{
+				url: paths.userList,
+				icon: "circle",
+				text: "Usuarios"
 			}
 		]
 	}
@@ -171,4 +176,7 @@ const List = styled.ul`
 	max-height: 440px;
 	overflow: hidden;
 	overflow-y: visible;
+	@media (min-width: 992px) {
+		max-height: 100vh;
+	}
 `;
