@@ -1,0 +1,9 @@
+{
+	"apps": [
+		{
+			"name": "frontend",
+			"script": "node",
+			"args": ["server.js"]
+		}
+	]
+}
